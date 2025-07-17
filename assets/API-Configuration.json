@@ -1,0 +1,15 @@
+{
+    "environment": "development",
+    "version": "1",
+    "development": {
+      
+        "hostUrl":"",
+        "timeout": 120,
+        "retry": 3
+    },
+    "production": {
+        "hostUrl": "",
+        "timeout": 120,
+        "retry": 3
+    }
+}

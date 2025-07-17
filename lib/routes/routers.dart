@@ -1,0 +1,72 @@
+import 'package:cattle/Screens/HomeScreen.dart';
+import 'package:cattle/Screens/LeadScreen.dart';
+import 'package:cattle/Screens/MenuScreen.dart';
+import 'package:cattle/Screens/NotifcationScreen.dart';
+import 'package:cattle/Screens/ProfileScreen.dart';
+import 'package:cattle/Screens/login_screen.dart';
+import 'package:cattle/Screens/splash_screen.dart';
+import 'package:cattle/Screens/walkthrough.dart';
+import 'package:flutter/material.dart';
+
+class Routers {
+  // Create a static method to configure the router
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case SplashScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => SplashScreen(),
+        );
+
+      case LoginScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => LoginScreen(),
+        );
+      case WalkthroughScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => WalkthroughScreen(),
+        );
+      case HomeScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => HomeScreen(),
+        );
+         case NotifcationScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => NotifcationScreen(),
+        );
+           case MenuScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => MenuScreen(),
+        );
+          case ProfileScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => ProfileScreen(),
+        );
+         case LeadScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => LeadScreen(),
+        );
+      default:
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+    }
+  }
+
+  // Define an error route for handling unknown routes
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Error',
+            ),
+          ),
+          body: const Center(
+            child: Text(
+              'Error: Route not found!',
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
