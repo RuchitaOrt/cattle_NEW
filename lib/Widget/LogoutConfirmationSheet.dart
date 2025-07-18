@@ -3,18 +3,20 @@ import 'package:cattle/Utils/cattle_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LogoutConfirmationSheet extends StatelessWidget {
+class ConfirmationSheet extends StatelessWidget {
   final VoidCallback onCancel;
   final VoidCallback onLogout;
   final String title;
-  final String imagePath; // SVG or PNG path
-
-  const LogoutConfirmationSheet({
+  final String imagePath; 
+  final String firstbutton;
+  final String secondButton;
+  final String subHeading;
+  const ConfirmationSheet({
     super.key,
     required this.onCancel,
     required this.onLogout,
     this.title = "Are you sure you want to log out?",
-    required this.imagePath,
+    required this.imagePath, required this.firstbutton, required this.secondButton, required this.subHeading,
   });
 
   @override
@@ -51,6 +53,21 @@ class LogoutConfirmationSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+        subHeading!=""?  Column(
+            children: [
+              Text(
+                subHeading,
+                textAlign: TextAlign.center,
+                style:  TextStyle(
+                  color: CattleColors.grey75,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+               const SizedBox(height: 24),
+            ],
+          ):Container(),
+
           Row(
             children: [
               Expanded(
@@ -61,7 +78,7 @@ class LogoutConfirmationSheet extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: const Text("Cancel",
+                  child:  Text(firstbutton,
                       style: TextStyle(color: CattleColors.orange,)),
                 ),
               ),
@@ -74,7 +91,7 @@ class LogoutConfirmationSheet extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: const Text("Log out",
+                  child:  Text(secondButton,
                       style: TextStyle(color: Colors.white)),
                 ),
               ),

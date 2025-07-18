@@ -1,15 +1,17 @@
 class LeadModel {
   final String name;
-  final String tag;
+  final List<String> tag;
   final String village;
   final String date;
   final String status;
+  final String? statusShown;
   final String daysLeft;
+  final bool isExpiringsoon;
   final String? imageUrl;
   final String? scheduleText;
   final String? buttonText;
 
-  LeadModel({
+  LeadModel( {
     required this.name,
     required this.tag,
     required this.village,
@@ -19,6 +21,8 @@ class LeadModel {
     this.imageUrl,
     this.scheduleText,
     this.buttonText,
+    this.isExpiringsoon=false,
+    this.statusShown, 
   });
 
   factory LeadModel.fromJson(Map<String, dynamic> json) {

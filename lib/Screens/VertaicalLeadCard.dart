@@ -1,12 +1,14 @@
 
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Widget/LeadCard.dart';
+import 'package:cattle/enum/caseListingEnum.dart';
 import 'package:cattle/model/LeadModel.dart';
 import 'package:flutter/material.dart';
 
 class LeadCardSlider extends StatefulWidget {
    final List<LeadModel> leadList; 
-  const LeadCardSlider({super.key, required this.leadList});
+   final String caseType;
+  const LeadCardSlider({super.key, required this.leadList, required this.caseType});
 
   @override
   State<LeadCardSlider> createState() => _LeadCardSliderState();
@@ -15,7 +17,8 @@ class LeadCardSlider extends StatefulWidget {
 class _LeadCardSliderState extends State<LeadCardSlider> {
   final ScrollController _scrollController = ScrollController();
   final int totalCards = 6;
-  double itemHeight = 252; // height of one card
+  double itemHeight =
+   252; // height of one card
   int _currentVisibleIndex = 0;
 
   @override
@@ -42,15 +45,16 @@ class _LeadCardSliderState extends State<LeadCardSlider> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Column(
       children: [
         ListView.builder(
           shrinkWrap: true,
           controller: _scrollController,
           itemCount: widget.leadList.length,
-          itemExtent: itemHeight,
+          itemExtent: widget.caseType==CaseType.Complete.name?170: itemHeight,
          
-          itemBuilder: (context, index) => _buildCard(index),
+          itemBuilder: (context, index) => _buildCard(index,widget.leadList),
         ),
         const SizedBox(height: 16),
        
@@ -58,7 +62,7 @@ class _LeadCardSliderState extends State<LeadCardSlider> {
     );
   }
 
-  Widget _buildCard(int index) {
+  Widget _buildCard(int index,List<LeadModel> leadList) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2),
       padding: const EdgeInsets.all(12),
@@ -73,7 +77,7 @@ class _LeadCardSliderState extends State<LeadCardSlider> {
           ),
         ],
       ),
-      child: const LeadCard(), // Replace with your actual widget
+      child:  LeadCard(leadList:  leadList[index],), // Replace with your actual widget
     );
   }
 }

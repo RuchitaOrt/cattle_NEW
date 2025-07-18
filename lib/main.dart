@@ -1,6 +1,7 @@
 
 import 'package:cattle/Screens/splash_screen.dart';
 import 'package:cattle/Provider/app_provider.dart';
+import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/routes/routers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,6 +39,11 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: routeGlobalKey,
         theme: ThemeData(
           textTheme: GoogleFonts.mulishTextTheme(),
+           textSelectionTheme: TextSelectionThemeData(
+      selectionColor: CattleColors.orange.withOpacity(0.3), // background highlight
+      selectionHandleColor: CattleColors.orange, // draggable handle
+      cursorColor: CattleColors.orange, // fallback cursor
+    ),
         ),
         initialRoute: SplashScreen.route,
         onGenerateRoute: Routers.generateRoute,

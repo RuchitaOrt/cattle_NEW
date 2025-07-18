@@ -22,6 +22,7 @@ class SplashScreen extends StatelessWidget {
         builder: (context, provider, _) {
           final height = MediaQuery.sizeOf(context).height;
           return Scaffold(
+            
             body: Stack(
               children: [
                 Center(

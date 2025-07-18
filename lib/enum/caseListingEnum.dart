@@ -1,8 +1,8 @@
 enum CaseType {
-  newCase,
-  pending,
-  unsynced,
-  complete,
+  New,
+  Pending,
+  Unsynced,
+  Complete,
 }
 class CaseItem {
   final String name;

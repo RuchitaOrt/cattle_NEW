@@ -24,7 +24,7 @@ class CaseCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(left: 12, right: 12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: CattleColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade200),
       ),

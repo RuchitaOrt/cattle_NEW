@@ -75,7 +75,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
     Radius.circular(8),
   );
   final BorderSide focusedBorder = const BorderSide(
-     color: CattleColors.hintGrey,
+     color: CattleColors.orange,
     width: 1.0,
   );
 
@@ -149,6 +149,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
 
 Widget _textFieldWidget() {
   return TextFormField(
+     cursorColor: CattleColors.orange, 
     textCapitalization: widget.textCapitalization,
     autovalidateMode: widget.autovalidateMode,
     controller: widget.textEditingController,

@@ -24,5 +24,13 @@ class CattleStrings {
   static const String strProfile = "Profile";
   static const String strRaiseTicket = "Raise ticket";
   static const String strLogout = "Log out";
-    static const String strYourLead = "Your leads";
+  static const String strYourLead = "Your leads";
+  static const String strReview = "Review";
+  static const String strSearch = "Search";
+
+  static const String strNoSearchHeading = "No results found";
+  static const String strNoSearchSubHeading =
+      "We could not find any matching results.\nTry searching for something else.";
+  static const String strNoFilterSubHeading =    "We could not find any matching results. \nTry filtering for something else.";
+       static const String strFilter = "Filter";
 }

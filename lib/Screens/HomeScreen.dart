@@ -2,6 +2,7 @@
 import 'package:cattle/Provider/app_provider.dart';
 import 'package:cattle/Screens/MenuScreen.dart';
 import 'package:cattle/Screens/NotifcationScreen.dart';
+import 'package:cattle/Screens/SearchScreen.dart';
 import 'package:cattle/Screens/SurveyContent.dart';
 import 'package:cattle/Screens/TaggingScreen.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
@@ -184,28 +185,38 @@ void didPopNext() {
                         const SizedBox(width: 16),
                       ],
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 16, right: 16, top: 40),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(color: Colors.white, width: 0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Icon(Icons.search, color: Colors.white),
-                            SizedBox(width: 8),
-                            Text(
-                              "Search by farmer name",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
+                    GestureDetector(
+                      onTap: ()
+                      {
+                         Navigator.of(routeGlobalKey.currentContext!)
+                                .pushNamed(
+                                  SearchScreen.route,
+                                )
+                                .then((value) {});
+                      },
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 16, right: 16, top: 40),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: Colors.white, width: 0.2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Icon(Icons.search, color: Colors.white),
+                              SizedBox(width: 8),
+                              Text(
+                                "Search by farmer name",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -10,6 +10,7 @@ import 'package:cattle/Widget/LeadCard.dart';
 import 'package:cattle/Widget/createSlideFromLeftRoute.dart';
 import 'package:cattle/enum/caseListingEnum.dart';
 import 'package:cattle/main.dart';
+import 'package:cattle/model/LeadModel.dart';
 import 'package:flutter/material.dart';
 
 class TaggingHomeScreen extends StatelessWidget {
@@ -63,7 +64,7 @@ class TaggingHomeScreen extends StatelessWidget {
                             Navigator.push(
   context,
   MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.newCase),
+    builder: (_) => ListingScreen(caseType: CaseType.New),
   ),
 );
                           },
@@ -78,7 +79,7 @@ class TaggingHomeScreen extends StatelessWidget {
                             Navigator.push(
   context,
   MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.pending),
+    builder: (_) => ListingScreen(caseType: CaseType.Pending),
   ),
 );}),
                         CaseCard(
@@ -91,7 +92,7 @@ class TaggingHomeScreen extends StatelessWidget {
                             Navigator.push(
   context,
   MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.unsynced),
+    builder: (_) => ListingScreen(caseType: CaseType.Unsynced),
   ),);},
 ),
                         CaseCard(
@@ -104,7 +105,7 @@ class TaggingHomeScreen extends StatelessWidget {
                             Navigator.push(
   context,
   MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.complete),
+    builder: (_) => ListingScreen(caseType: CaseType.Complete),
   ),
 );
                           },),
@@ -161,8 +162,31 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
   final PageController _pageController = PageController(viewportFraction: 1);
   int _currentPage = 0;
 
-  final int totalCards = 6; // You can make this dynamic if needed
-
+  
+final List<LeadModel> yourLeadsListing = [
+  LeadModel(
+    name: "Rajeev Ranjan",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "New",
+     statusShown: "Pending",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+  LeadModel(
+    name: "Ashok Jha",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+     statusShown: "Pending",
+   status: "New",
+    daysLeft: "",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -171,7 +195,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
           height: 250, // Adjust height based on card content
           child: PageView.builder(
             controller: _pageController,
-            itemCount: totalCards,
+            itemCount: yourLeadsListing.length,
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
@@ -188,7 +212,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
         const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(totalCards, (index) {
+          children: List.generate(yourLeadsListing.length, (index) {
             bool isSelected = _currentPage == index;
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -206,7 +230,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
               child: isSelected
                   ? Center(
                       child: Text(
-                        "${index + 1}/$totalCards",
+                        "${index + 1}/${yourLeadsListing.length}",
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -237,7 +261,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
           ),
         ],
       ),
-      child: LeadCard(), // Replace with your existing widget
+      child: LeadCard(leadList: yourLeadsListing[index],), // Replace with your existing widget
     );
   }
 }

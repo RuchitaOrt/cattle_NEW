@@ -15,42 +15,134 @@ class ListingScreen extends StatelessWidget {
 
   String getTitle() {
     switch (caseType) {
-      case CaseType.newCase:
+      case CaseType.New:
         return "New";
-      case CaseType.pending:
+      case CaseType.Pending:
         return "Pending";
-      case CaseType.unsynced:
+      case CaseType.Unsynced:
         return "Unsynced";
-      case CaseType.complete:
+      case CaseType.Complete:
         return "Complete";
     }
   }
-final List<LeadModel> leadsListing = [
+final List<LeadModel> newLeadsListing = [
   LeadModel(
     name: "Rajeev Ranjan",
-    tag: "LIVESTOCK",
+    tag: ["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
-    status: "Reschedule",
+    status: "New",
+     statusShown:  "Pending",
     daysLeft: "2 Days left",
     scheduleText: "Reschedule",
     buttonText: "Start",
   ),
   LeadModel(
     name: "Ashok Jha",
-    tag: "LIVESTOCK",
+    tag:["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
-    status: "Pending",
-    daysLeft: "3 Days left",
+    status: "New",
+     statusShown:  "Pending",
+    daysLeft: "",
     scheduleText: "Schedule",
     buttonText: "Start",
   ),
 ];
-
+final List<LeadModel> pendingLeadsListing = [
+  LeadModel(
+    name: "Rajeev Ranjan",
+    isExpiringsoon: true,
+    tag: ["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+     statusShown:  "Pending",
+    daysLeft: "2 hr 15 min left",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
+  LeadModel(
+    name: "Ashok Jha",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+     statusShown:  "Pending",
+    daysLeft: "2 Days left",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
+];
+final List<LeadModel>unsyncLeadsListing = [
+  LeadModel(
+    name: "Rajeev Ranjan",
+    tag: ["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Unsynced",
+    statusShown:  "Sync error",
+    isExpiringsoon: true,
+     daysLeft: "2 hr 15 min left",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
+  LeadModel(
+    name: "Ashok Jha",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Unsynced",
+     statusShown:  "Syncing",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+];
+final List<LeadModel> completeLeadsListing = [
+  LeadModel(
+    name: "Rajeev Ranjan",
+    tag: ["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Complete",
+    daysLeft: "2 Days left",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
+  LeadModel(
+    name: "Ashok Jha",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Complete",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+];
+ List<LeadModel> selectedLeads=[];
   @override
   Widget build(BuildContext context) {
+   
+
+final title = getTitle();
+
+if (title == CaseType.New.name) {
+ 
+  selectedLeads = newLeadsListing;
+} else if (title == CaseType.Pending.name) {
+  selectedLeads = pendingLeadsListing;
+} else if (title == CaseType.Unsynced.name) {
+  selectedLeads = unsyncLeadsListing;
+} else if (title == CaseType.Complete.name) {
+  selectedLeads = completeLeadsListing;
+} else {
+  selectedLeads = [];
+}
+
     return Scaffold(
+      backgroundColor: CattleColors.white,
       appBar: CommonAppBar(title: getTitle()),
       body: Column(
         children: [
@@ -106,7 +198,9 @@ final List<LeadModel> leadsListing = [
                   const SizedBox(height: 12),
 
                   // Leads Card
-                  LeadCardSlider(leadList: leadsListing,),
+                  LeadCardSlider(leadList:selectedLeads,caseType: caseType.name,
+
+                  ),
                   const SizedBox(height: 16),
                 ],
               ),

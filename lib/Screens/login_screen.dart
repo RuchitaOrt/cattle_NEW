@@ -29,7 +29,7 @@ Widget build(BuildContext context) {
   final signInProvider = Provider.of<SignInProvider>(context);
 
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(8));
-  final BorderSide focusedBorder = const BorderSide(width: 1.0,color: CattleColors.hintGrey,);
+  final BorderSide focusedBorder = const BorderSide(width: 1.0,color: CattleColors.orange,);
   final BorderSide enableBorder = BorderSide(width: 1.0,
   color: CattleColors.hintGrey,);
 
@@ -76,6 +76,7 @@ Widget build(BuildContext context) {
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical * 1),
                   TextFormField(
+                    cursorColor: CattleColors.orange,
                     style: CattleStyles.textFieldHeading,
                     obscureText: signInProvider.isPasswordObscured,
                     controller: signInProvider.passwordController,
@@ -110,9 +111,10 @@ Widget build(BuildContext context) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Checkbox(
-                        visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+                      
                         value: signInProvider.rememberMe,
                         onChanged: signInProvider.toggleRememberMe,
+                          visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                         activeColor: CattleColors.orange,
                         side: BorderSide(color: CattleColors.hintGrey),
                         checkColor: CattleColors.white,

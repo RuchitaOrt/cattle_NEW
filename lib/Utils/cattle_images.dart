@@ -27,7 +27,27 @@ class CattleImagePath {
   static String location = "assets/images/location_on.svg";
   static String totalcases = "assets/images/totalCases.svg";
   static String lead = "assets/images/lead.svg";
-   static String verify = "assets/images/verify.svg";
-     static String edit = "assets/images/edit.svg";
-       static String filter = "assets/images/filter.svg";
+  static String verify = "assets/images/verify.svg";
+  static String edit = "assets/images/edit.svg";
+  static String filter = "assets/images/filter.svg";
+
+  static String alarm = "assets/images/alarm.svg";
+  static String currency = "assets/images/currency.svg";
+  static String cloudalert = "assets/images/cloud_alert.svg";
+  static String cloud = "assets/images/cloud.svg";
+
+  static String callred = "assets/images/callred.svg";
+  static String markcircle = "assets/images/check_circle.svg";
+  static String listalt = "assets/images/list_alt.svg";
+  static String checkgreen = "assets/images/check_green.svg";
+  static String closeorange = "assets/images/Closeorange.svg";
+  static String searchgrey = "assets/images/search_grey.svg";
+
+  static String nosearch = "assets/images/nosearch.svg";
+  static String nofilter = "assets/images/nofilter.svg";
+  static String info = "assets/images/info.svg";
+  static String addaphoto = "assets/images/add_a_photo.svg";
+
+  static String dropdown = "assets/images/dropdown.svg";
+
 }

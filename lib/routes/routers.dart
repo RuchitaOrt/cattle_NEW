@@ -1,8 +1,11 @@
+import 'package:cattle/Screens/FilterScreen.dart';
 import 'package:cattle/Screens/HomeScreen.dart';
 import 'package:cattle/Screens/LeadScreen.dart';
 import 'package:cattle/Screens/MenuScreen.dart';
 import 'package:cattle/Screens/NotifcationScreen.dart';
 import 'package:cattle/Screens/ProfileScreen.dart';
+import 'package:cattle/Screens/ReviewClass.dart';
+import 'package:cattle/Screens/SearchScreen.dart';
 import 'package:cattle/Screens/login_screen.dart';
 import 'package:cattle/Screens/splash_screen.dart';
 import 'package:cattle/Screens/walkthrough.dart';
@@ -44,6 +47,18 @@ class Routers {
          case LeadScreen.route:
         return MaterialPageRoute(
           builder: (_) => LeadScreen(),
+        );
+        case ReviewScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => ReviewScreen(),
+        );
+         case FilterScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => FilterScreen(),
+        );
+        case SearchScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => SearchScreen(),
         );
       default:
         return MaterialPageRoute(builder: (_) => SplashScreen());

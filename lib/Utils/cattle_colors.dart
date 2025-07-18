@@ -24,4 +24,14 @@ class CattleColors {
   static const Color grey75 = Color(0xff757575);
   static const Color background = Color(0xffE0E0E0);
   static const Color grey61 = Color(0xff616161);
+  static const Color faintRed =Color(0xffFFD5CD);
+  static const Color secondayBlue =Color(0xff5383B8);
+  static const Color grey =Color(0xff565151);
+  static const Color lightgreen =Color(0xffC6F2D4);
+   static const Color darkgreen =Color(0xff01A252);
+   static const Color brownblack =Color(0xff2E0C00);
+   static const Color lightOrange =Color(0xffFFF2ED);
+   static const Color secondarybluestroke =Color(0xffA8D1FF);
+   static const Color secondaryblue =Color(0xffEDF6FF);
+   
 }

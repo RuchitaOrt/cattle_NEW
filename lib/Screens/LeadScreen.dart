@@ -1,9 +1,13 @@
+import 'package:cattle/Screens/FilterScreen.dart';
 import 'package:cattle/Screens/TaggingScreen.dart';
+import 'package:cattle/Screens/VertaicalLeadCard.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Utils/cattle_strings.dart';
 import 'package:cattle/Widget/CommonAppBar.dart';
 import 'package:cattle/Widget/DualStyleHeading.dart';
+import 'package:cattle/main.dart';
+import 'package:cattle/model/LeadModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,6 +20,30 @@ class LeadScreen extends StatefulWidget {
 }
 
 class _LeadScreenState extends State<LeadScreen> {
+  final List<LeadModel> yourLeadsListing = [
+  LeadModel(
+    name: "Rajeev Ranjan",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Reschedule",
+    statusShown: "Pending",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+  LeadModel(
+    name: "Ashok Jha",
+    tag:["NON-NLM","NON-LOANEE"],
+     statusShown: "Pending",
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+    daysLeft: "",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +89,22 @@ class _LeadScreenState extends State<LeadScreen> {
                         first: "Cases",
                         second: " Overview",
                       ),
-                     Row(
-                       children: [
-                         SvgPicture.asset(CattleImagePath.filter),
-                         SizedBox(width: 4,),
-                          Text("Filter",style: TextStyle(color: CattleColors.orange,fontSize: 14),)
-                       ],
+                     GestureDetector(
+                      onTap: ()
+                      {
+                            Navigator.of(routeGlobalKey.currentContext!)
+                                .pushNamed(
+                                  FilterScreen.route,
+                                )
+                                .then((value) {});
+                      },
+                       child: Row(
+                         children: [
+                           SvgPicture.asset(CattleImagePath.filter),
+                           SizedBox(width: 4,),
+                            Text("Filter",style: TextStyle(color: CattleColors.orange,fontSize: 14),)
+                         ],
+                       ),
                      ),
                     
                     ],
@@ -75,7 +113,7 @@ class _LeadScreenState extends State<LeadScreen> {
                   const SizedBox(height: 12),
 
                   // Leads Card
-                  TaggingCardSlider(),
+                  LeadCardSlider(leadList: yourLeadsListing,caseType: "YourLead",),
                   const SizedBox(height: 16),
                 ],
               ),
