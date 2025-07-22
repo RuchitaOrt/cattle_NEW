@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         navigatorObservers: [routeObserver],
-        title: 'Cattle',
+        title: 'IL PashuBima',
         debugShowCheckedModeBanner: false,
         navigatorKey: routeGlobalKey,
         theme: ThemeData(
