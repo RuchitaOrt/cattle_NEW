@@ -1,21 +1,32 @@
+import 'package:cattle/Screens/ListingScreen.dart';
 import 'package:cattle/Screens/ReviewCard.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Utils/cattle_strings.dart';
 import 'package:cattle/Utils/sizeConfig.dart';
 import 'package:cattle/Widget/CommonAppBar.dart';
+import 'package:cattle/enum/caseListingEnum.dart';
 import 'package:flutter/material.dart';
 
 class ReviewScreen extends StatefulWidget {
+  final String caseStatus;
   static const String route = "/ReviewScreen";
-  const ReviewScreen({super.key});
+   ReviewScreen({super.key, required this.caseStatus});
 
   @override
   State<ReviewScreen> createState() => _ReviewScreenState();
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
-  List<Map<String, dynamic>> reviewList = [
+  List<Map<String, dynamic>> reviewList =[];
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("widget.caseStatus");
+    print(widget.caseStatus);
+    print(CaseType.Complete.name);
+     reviewList = [
     {
       "name": "Rajeev Ranjan",
       "role": "NLM | LOANEE",
@@ -25,12 +36,13 @@ class _ReviewScreenState extends State<ReviewScreen> {
       "animals": List.generate(
           10,
           (index) => {
-                "rfid": "NPNLML1234567",
+                "rfid": "NPNLML1234597",
                 "animal": "Cow",
-                "status": "Synced",
+                "status":widget.caseStatus==CaseType.Complete.name?"Synced":"Sync error",
               }),
     },
   ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +53,13 @@ class _ReviewScreenState extends State<ReviewScreen> {
         child: ElevatedButton(
           onPressed: () {
             // Handle sync logic here
+             Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ListingScreen(caseType: CaseType.Complete),
+                              ),
+                            );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: CattleColors.orange,
@@ -123,15 +142,18 @@ class _ReviewScreenState extends State<ReviewScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       // Info Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _infoColumn("Updated date", "29 Apr 25"),
-                          _infoColumn("District", "Khandwa"),
-                          _infoColumn("Animals tagged", "0 of 10"),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _infoColumn("Updated date", "29 Apr 25"),
+                            _infoColumn("District", "Khandwa"),
+                            _infoColumn("Animals tagged", "0 of 10"),
+                          ],
+                        ),
                       ),
                     ],
                   ),

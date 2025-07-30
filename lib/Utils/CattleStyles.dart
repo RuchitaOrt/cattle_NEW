@@ -16,7 +16,7 @@ class CattleStyles {
   );
    static const TextStyle textFieldHeading = TextStyle(
     color: CattleColors.blacklight,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w600,
     fontSize: 12.0,
   );
    static const TextStyle textFieldHint = TextStyle(

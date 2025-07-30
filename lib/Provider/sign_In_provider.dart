@@ -26,6 +26,14 @@ class SignInProvider with ChangeNotifier {
  bool get isFormValid {
     return (userIDController.text.trim().isNotEmpty && passwordController.text.trim().isNotEmpty && rememberMe);
   }
+
+    void addListeners() {
+    userIDController.addListener(notifyListeners);
+    passwordController.addListener(notifyListeners);
+    
+   
+  }
+
   // Getter for formKey
   GlobalKey<FormState> get formKey => _formKey;
   bool get isPasswordObscured => _isPasswordObscured;

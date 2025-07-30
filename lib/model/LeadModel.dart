@@ -10,6 +10,8 @@ class LeadModel {
   final String? imageUrl;
   final String? scheduleText;
   final String? buttonText;
+  final String? LoanType;
+  final String? proceedType; 
 
   LeadModel( {
     required this.name,
@@ -23,6 +25,7 @@ class LeadModel {
     this.buttonText,
     this.isExpiringsoon=false,
     this.statusShown, 
+    this.LoanType, this.proceedType, 
   });
 
   factory LeadModel.fromJson(Map<String, dynamic> json) {
@@ -36,7 +39,10 @@ class LeadModel {
       imageUrl: json['imageUrl'],
       scheduleText: json['scheduleText'],
       buttonText: json['buttonText'],
+       LoanType: json['LoanType'] ?? '',
+        proceedType: json['proceedType'] ?? '',
     );
+
   }
 
   Map<String, dynamic> toJson() {

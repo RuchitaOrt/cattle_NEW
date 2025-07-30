@@ -1,7 +1,9 @@
+import 'package:cattle/Screens/FilterScreen.dart';
 import 'package:cattle/Screens/VertaicalLeadCard.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Widget/DualStyleHeading.dart';
 import 'package:cattle/enum/caseListingEnum.dart';
+import 'package:cattle/main.dart';
 import 'package:cattle/model/LeadModel.dart';
 import 'package:flutter/material.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
@@ -23,11 +25,15 @@ class ListingScreen extends StatelessWidget {
         return "Unsynced";
       case CaseType.Complete:
         return "Complete";
+        case CaseType.Expiring:
+        return "Expiring";
     }
   }
 final List<LeadModel> newLeadsListing = [
   LeadModel(
     name: "Rajeev Ranjan",
+     LoanType: "LOANEE",
+    proceedType: "NON-NLM",
     tag: ["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
@@ -39,6 +45,9 @@ final List<LeadModel> newLeadsListing = [
   ),
   LeadModel(
     name: "Ashok Jha",
+    
+     LoanType: "LOANEE",
+    proceedType: "NLM",
     tag:["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
@@ -52,6 +61,8 @@ final List<LeadModel> newLeadsListing = [
 final List<LeadModel> pendingLeadsListing = [
   LeadModel(
     name: "Rajeev Ranjan",
+     LoanType: "LOANEE",
+    proceedType: "NON-NLM",
     isExpiringsoon: true,
     tag: ["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
@@ -64,6 +75,8 @@ final List<LeadModel> pendingLeadsListing = [
   ),
   LeadModel(
     name: "Ashok Jha",
+     LoanType: "LOANEE",
+    proceedType: "NLM",
     tag:["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
@@ -73,10 +86,38 @@ final List<LeadModel> pendingLeadsListing = [
     scheduleText: "Reschedule",
     buttonText: "Start",
   ),
+    LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+    proceedType: "NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+     statusShown:  "Payment Pending",
+    daysLeft: "2 Days left",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
+    LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+    proceedType: "NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+     statusShown:  "CKYC Pending",
+    daysLeft: "2 Days left",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
 ];
 final List<LeadModel>unsyncLeadsListing = [
   LeadModel(
     name: "Rajeev Ranjan",
+     LoanType: "LOANEE",
+    proceedType: "NON-NLM",
     tag: ["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
@@ -89,6 +130,8 @@ final List<LeadModel>unsyncLeadsListing = [
   ),
   LeadModel(
     name: "Ashok Jha",
+     LoanType: "LOANEE",
+    proceedType: "NLM",
     tag:["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
@@ -103,6 +146,8 @@ final List<LeadModel> completeLeadsListing = [
   LeadModel(
     name: "Rajeev Ranjan",
     tag: ["NON-NLM","NON-LOANEE"],
+     LoanType: "LOANEE",
+    proceedType: "NLM",
     village: "Khushdeva",
     date: "29 Apr '25",
     status: "Complete",
@@ -112,10 +157,100 @@ final List<LeadModel> completeLeadsListing = [
   ),
   LeadModel(
     name: "Ashok Jha",
+     LoanType: "LOANEE",
+    proceedType: "NON-NLM",
     tag:["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
     status: "Complete",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+];
+
+
+final List<LeadModel> expiringLeadsListing = [
+  LeadModel(
+    name: "Ruchita Ranjan",
+    tag: ["NON-NLM","NON-LOANEE"],
+    isExpiringsoon: true,
+     LoanType: "LOANEE",
+    proceedType: "NLM",
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Expiring",
+    daysLeft: "2 Days left",
+      statusShown:  "Syncing",
+    scheduleText: "Reschedule",
+    buttonText: "Start",
+  ),
+  LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+      isExpiringsoon: true,
+    proceedType: "NON-NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+      statusShown:  "CKYC Pending",
+    date: "29 Apr '25",
+    status: "Expiring",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+   LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+      isExpiringsoon: true,
+    proceedType: "NON-NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+      statusShown:  "Payment Pending",
+    date: "29 Apr '25",
+    status: "Expiring",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+   LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+      isExpiringsoon: true,
+    proceedType: "NON-NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+      statusShown:  "Sync error",
+    date: "29 Apr '25",
+    status: "Expiring",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+   LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+      isExpiringsoon: true,
+    proceedType: "NON-NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+      statusShown:  "New",
+    date: "29 Apr '25",
+    status: "Expiring",
+    daysLeft: "2 Days left",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+   LeadModel(
+    name: "Ashok Jha",
+     LoanType: "LOANEE",
+      isExpiringsoon: true,
+    proceedType: "NON-NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+    village: "Khushdeva",
+      statusShown:  "Pending",
+    date: "29 Apr '25",
+    status: "Expiring",
     daysLeft: "2 Days left",
     scheduleText: "Schedule",
     buttonText: "Start",
@@ -137,6 +272,8 @@ if (title == CaseType.New.name) {
   selectedLeads = unsyncLeadsListing;
 } else if (title == CaseType.Complete.name) {
   selectedLeads = completeLeadsListing;
+} else if (title == CaseType.Expiring.name) {
+  selectedLeads = expiringLeadsListing;
 } else {
   selectedLeads = [];
 }
@@ -184,12 +321,23 @@ if (title == CaseType.New.name) {
                         first: "Cases",
                         second: " Overview",
                       ),
-                     Row(
-                       children: [
-                         SvgPicture.asset(CattleImagePath.filter),
-                         SizedBox(width: 4,),
-                          Text("Filter",style: TextStyle(color: CattleColors.orange,fontSize: 14),)
-                       ],
+                     GestureDetector
+                     (
+                      onTap: ()
+                      {
+                          Navigator.of(routeGlobalKey.currentContext!)
+                                .pushNamed(
+                                  FilterScreen.route,
+                                )
+                                .then((value) {});
+                      },
+                       child: Row(
+                         children: [
+                           SvgPicture.asset(CattleImagePath.filter),
+                           SizedBox(width: 4,),
+                            Text("Filter",style: TextStyle(color: CattleColors.orange,fontSize: 14),)
+                         ],
+                       ),
                      ),
                     
                     ],

@@ -15,10 +15,14 @@ class SearchProvider extends ChangeNotifier {
     "Rajesh Kumar", "Priya Desai", "Vikram Singh"
   ];
   final List<LeadModel> yourLeadsListing = [
-    LeadModel(name: "Sohlesh Sonewat", tag: ["NON-NLM", "NON-LOANEE"], village: "Khushdeva", date: "29 Apr '25", status: "Reschedule", statusShown: "Pending", daysLeft: "2 Days left", scheduleText: "Schedule", buttonText: "Start"),
-    LeadModel(name: "Ananya Gupta", tag: ["NON-NLM", "NON-LOANEE"], village: "Khushdeva", date: "29 Apr '25", status: "Reschedule", statusShown: "Pending", daysLeft: "2 Days left", scheduleText: "Schedule", buttonText: "Start"),
-    LeadModel(name: "Priya Desai", tag: ["NON-NLM", "NON-LOANEE"], village: "Khushdeva", date: "29 Apr '25", status: "Reschedule", statusShown: "Pending", daysLeft: "2 Days left", scheduleText: "Schedule", buttonText: "Start"),
-    LeadModel(name: "Vikram Sing", tag: ["NON-NLM", "NON-LOANEE"], statusShown: "Pending", village: "Khushdeva", date: "29 Apr '25", status: "Pending", daysLeft: "", scheduleText: "Schedule", buttonText: "Start"),
+    LeadModel(name: "Sohlesh Sonewat", LoanType: "LOANEE",
+    proceedType: "NON-NLM", tag: ["NON-NLM", "NON-LOANEE"], village: "Khushdeva", date: "29 Apr '25", status: "Reschedule", statusShown: "Pending", daysLeft: "2 Days left", scheduleText: "Schedule", buttonText: "Start"),
+    LeadModel(name: "Ananya Gupta", LoanType: "LOANEE",
+    proceedType: "NON-NLM", tag: ["NON-NLM", "NON-LOANEE"], village: "Khushdeva", date: "29 Apr '25", status: "Reschedule", statusShown: "Pending", daysLeft: "2 Days left", scheduleText: "Schedule", buttonText: "Start"),
+    LeadModel(name: "Priya Desai", LoanType: "LOANEE",
+    proceedType: "NON-NLM", tag: ["NON-NLM", "NON-LOANEE"], village: "Khushdeva", date: "29 Apr '25", status: "Reschedule", statusShown: "Pending", daysLeft: "2 Days left", scheduleText: "Schedule", buttonText: "Start"),
+    LeadModel(name: "Vikram Sing", LoanType: "LOANEE",
+    proceedType: "NON-NLM", tag: ["NON-NLM", "NON-LOANEE"], statusShown: "Pending", village: "Khushdeva", date: "29 Apr '25", status: "Pending", daysLeft: "", scheduleText: "Schedule", buttonText: "Start"),
   ];
 
   List<String> searchResults = [];

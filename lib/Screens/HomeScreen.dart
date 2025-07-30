@@ -1,5 +1,6 @@
 // home_screen.dart
 import 'package:cattle/Provider/app_provider.dart';
+import 'package:cattle/Screens/ListingScreen.dart';
 import 'package:cattle/Screens/MenuScreen.dart';
 import 'package:cattle/Screens/NotifcationScreen.dart';
 import 'package:cattle/Screens/SearchScreen.dart';
@@ -9,6 +10,7 @@ import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Widget/WarningBar.dart';
 import 'package:cattle/Widget/createSlideFromLeftRoute.dart';
+import 'package:cattle/enum/caseListingEnum.dart';
 import 'package:cattle/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +60,13 @@ class _HomeScreenState extends State<HomeScreen>with RouteAware {
           actionText: "Act now",
           onPressed: () {
             print("Act now clicked");
+             Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ListingScreen(caseType: CaseType.Expiring),
+                              ),
+                            );
           },
         ),
       ),

@@ -16,3 +16,20 @@ Route createSlideFromLeftRoute(Widget page) {
     },
   );
 }
+Route createSlideFromBottomRoute(Widget page) {
+  return PageRouteBuilder(
+    transitionDuration: const Duration(milliseconds: 600), // Slower animation
+    pageBuilder: (_, __, ___) => page,
+    transitionsBuilder: (_, animation, __, child) {
+      const begin = Offset(0.0, 1.0); // Start from bottom
+      const end = Offset.zero;
+      const curve = Curves.easeOut; // Smoother curve
+
+      final tween = Tween(begin: begin, end: end)
+          .chain(CurveTween(curve: curve));
+      final offsetAnimation = animation.drive(tween);
+
+      return SlideTransition(position: offsetAnimation, child: child);
+    },
+  );
+}

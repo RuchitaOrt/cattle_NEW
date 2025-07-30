@@ -23,6 +23,8 @@ class _LeadScreenState extends State<LeadScreen> {
   final List<LeadModel> yourLeadsListing = [
   LeadModel(
     name: "Rajeev Ranjan",
+    LoanType: "LOANEE",
+    proceedType: "NON-NLM",
     tag:["NON-NLM","NON-LOANEE"],
     village: "Khushdeva",
     date: "29 Apr '25",
@@ -34,6 +36,34 @@ class _LeadScreenState extends State<LeadScreen> {
   ),
   LeadModel(
     name: "Ashok Jha",
+      LoanType: "LOANEE",
+    proceedType: "NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+     statusShown: "Pending",
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+    daysLeft: "",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+    LeadModel(
+    name: "Ashok Jha",
+      LoanType: "NON-LOANEE",
+    proceedType: "NLM",
+    tag:["NON-NLM","NON-LOANEE"],
+     statusShown: "Pending",
+    village: "Khushdeva",
+    date: "29 Apr '25",
+    status: "Pending",
+    daysLeft: "",
+    scheduleText: "Schedule",
+    buttonText: "Start",
+  ),
+    LeadModel(
+    name: "Ashok Jha",
+      LoanType: "NON-LOANEE",
+    proceedType: "NON-NLM",
     tag:["NON-NLM","NON-LOANEE"],
      statusShown: "Pending",
     village: "Khushdeva",
@@ -113,7 +143,7 @@ class _LeadScreenState extends State<LeadScreen> {
                   const SizedBox(height: 12),
 
                   // Leads Card
-                  LeadCardSlider(leadList: yourLeadsListing,caseType: "YourLead",),
+                  LeadCardSlider(leadList: yourLeadsListing,caseType: CattleStrings.strYourLead,),
                   const SizedBox(height: 16),
                 ],
               ),

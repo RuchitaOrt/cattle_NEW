@@ -1,19 +1,31 @@
 import 'package:cattle/Provider/AvailabilityProvider.dart';
+import 'package:cattle/Screens/HomeScreen.dart';
+import 'package:cattle/Screens/TaggingStepper.dart';
+import 'package:cattle/Utils/CattleStyles.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
+import 'package:cattle/Utils/cattle_strings.dart';
 import 'package:cattle/Utils/sizeConfig.dart';
+import 'package:cattle/Widget/CustomDropdownField.dart';
+import 'package:cattle/Widget/LogoutConfirmationSheet.dart';
+import 'package:cattle/Widget/TextWithAsterisk.dart';
+import 'package:cattle/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class FarmerAvailabilitySheet extends StatelessWidget {
-  
-   FarmerAvailabilitySheet({super.key});
+  FarmerAvailabilitySheet({super.key});
 
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(8));
-  final BorderSide focusedBorder = const BorderSide(width: 1.0,color: CattleColors.orange,);
-  final BorderSide enableBorder = BorderSide(width: 1.0,color: 
-  CattleColors.orange,);
+  final BorderSide focusedBorder = const BorderSide(
+    width: 1.0,
+     color: CattleColors.hintGrey,
+  );
+  final BorderSide enableBorder = BorderSide(
+    width: 1.0,
+    color: CattleColors.background,
+  );
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<FarmerAvailabilityProvider>(context);
@@ -50,11 +62,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                     fontWeight: FontWeight.w200,
                     color: CattleColors.grey75)),
             const SizedBox(height: 16),
-            const Text("Farmer available? *",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: CattleColors.blackshade)),
+    TextWithAsterisk(text:'Farmer available? '),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
@@ -116,7 +124,8 @@ class FarmerAvailabilitySheet extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             if (provider.isFarmerAvailable == true) ...[
-              const Text("Animal available? *"),
+            
+          TextWithAsterisk(text:'Animal available? '),
               Wrap(
                 spacing: 8,
                 children: [
@@ -179,97 +188,80 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 ],
               ),
             ],
-            if (provider.isFarmerAvailable == true && provider.isAnimalAvailable == false) ...[
-  const SizedBox(height: 16),
-  const Text("Reason for unavailability *"),
-  const SizedBox(height: 4),
-  DropdownButtonFormField<String>(
-   
-    icon: SvgPicture.asset(CattleImagePath.dropdown),
-    decoration: InputDecoration(
-       contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-                      border: OutlineInputBorder(borderRadius: borderRadius, borderSide: enableBorder),
-                      focusedBorder: OutlineInputBorder(borderRadius: borderRadius, borderSide: focusedBorder),
-                      enabledBorder: OutlineInputBorder(borderRadius: borderRadius, borderSide: enableBorder),
-                      filled: true,
-                      fillColor: CattleColors.white,
-      
-    ),
-    hint: const Text("Select why the animal is unavailable",style: TextStyle(color: CattleColors.hintGrey,fontSize: 14),),
-    value: provider.selectedReason,
-    items: [
-      "Farmer is out of town",
-      "Animal is sick",
-      "Animal is not tagged",
-      "Other"
-    ]
-        .map((reason) => DropdownMenuItem(
-              value: reason,
-              child: Text(reason),
-            ))
-        .toList(),
-    onChanged: (value) {
-      if (value != null) provider.setReason(value);
-    },
-  ),
-  const SizedBox(height: 12),
-  Container(
-    padding: const EdgeInsets.all(12),
-    decoration: BoxDecoration(
-      color: CattleColors.secondaryblue,
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: CattleColors.secondarybluestroke),
-    ),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SvgPicture.asset(CattleImagePath.info),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            "As the animal is unavailable, please take a photo of the farmer, and a nearby landmark with the village address clearly visible.",
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
-          ),
-        ),
-      ],
-    ),
-  ),
-  const SizedBox(height: 16),
-  const Text("Farmer's image *", style: TextStyle(fontWeight: FontWeight.w600)),
-  const SizedBox(height: 4),
-  GestureDetector(
-    onTap: provider.pickImage,
-    child: Container(
-      height: 100,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(color: CattleColors.orange, width: 0.5),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      alignment: Alignment.center,
-      child: provider.imageFile == null
-          ? SvgPicture.asset(CattleImagePath.addaphoto)
-          : ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.file(
-                provider.imageFile!,
-                height: 100,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            if (provider.isFarmerAvailable == true &&
+                provider.isAnimalAvailable == false) ...[
+              const SizedBox(height: 16),
+
+
+                  CustomDropdownField(
+              labelText: CattleStrings.strReasonForUnavailabilty,
+              hintText: CattleStrings.strReasonForUnavailabiltyHint,
+              value: provider.selectedCategory,
+              items: ['Cattle unhealthy', 'Farmer Not Available', ],
+              onChanged: (val) {
+                provider.selectedCategory = val;
+              },
             ),
-    ),
-  ),
-  const SizedBox(height: 30),
-              const Text(
-                "Nearby landmark's image *",
-                style: TextStyle(
-                    color: CattleColors.blackshade,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              ),
+               TextWithAsterisk(text:'Reason for unavailability '),
+              
+              
               const SizedBox(height: 4),
-    GestureDetector(
+           
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: CattleColors.secondaryblue,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: CattleColors.secondarybluestroke),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(CattleImagePath.info),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        "As the animal is unavailable, please take a photo of the farmer, and a nearby landmark with the village address clearly visible.",
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+            TextWithAsterisk(text:"Farmer's image "),
+              const SizedBox(height: 4),
+              GestureDetector(
+                onTap: provider.pickImageFarmer,
+                child: Container(
+                  height: 100,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: CattleColors.orange, width: 0.5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  alignment: Alignment.center,
+                  child: provider.imageFileFarmer == null
+                      ? SvgPicture.asset(CattleImagePath.addaphoto)
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.file(
+                            provider.imageFileFarmer!,
+                            height: 100,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                ),
+              ),
+              const SizedBox(height: 30),
+        TextWithAsterisk(text:"Nearby landmark's image "),
+            
+             
+              const SizedBox(height: 4),
+              GestureDetector(
                 onTap: provider.pickImage,
                 child: Container(
                   height: 100,
@@ -292,8 +284,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                         ),
                 ),
               )
-]
-,
+            ],
             if (provider.isFarmerAvailable == false) ...[
               Container(
                 padding: EdgeInsets.all(12),
@@ -323,13 +314,8 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                "Your current location:",
-                style: TextStyle(
-                    color: CattleColors.blackshade,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              ),
+                TextWithAsterisk(text: "Your current location "),
+             
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,13 +367,8 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              const Text(
-                "Nearby landmark's image *",
-                style: TextStyle(
-                    color: CattleColors.blackshade,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              ),
+         TextWithAsterisk(text:"Nearby landmark's image "),
+             
               const SizedBox(height: 4),
               GestureDetector(
                 onTap: provider.pickImage,
@@ -423,18 +404,104 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                   ),
                   backgroundColor: provider.isFormValid
                       ? CattleColors.orange
-                      :provider.isFarmerAvailable==false? provider.imageFile != null
-                          ? CattleColors.orange
-                          : CattleColors.greyButton:CattleColors.greyButton,
+                      : provider.isFarmerAvailable == false
+                          ? provider.imageFile != null
+                              ? CattleColors.orange
+                              : CattleColors.greyButton
+                          : CattleColors.greyButton,
                 ),
                 onPressed: () {
                   // handle success action
+print("first");
+print(provider.isFarmerAvailable);
+print("first");
 
-                  if (provider.isFormValid) {
-                    Navigator.pop(context);
-                  } else if (provider.isFarmerAvailable == false) {
-                    if (provider.imageFile != null) {}
+                   if (provider.isFarmerAvailable == false) {
+                      print("first");
+                    if (provider.imageFile != null) {
+                           Navigator.pop(context);
+                      showModalBottomSheet(
+                        backgroundColor: CattleColors.white,
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        isScrollControlled: true,
+                        builder: (_) => ConfirmationSheet(
+                          singleButton: "Back To Home",
+                          imagePath:
+                              CattleImagePath.unavailable, // Your SVG/PNG
+                          isSingleButton: true,
+                          title: "Farmer not available!",
+                         
+                          onBackToHome: () {
+                            Navigator.pushReplacement(
+                                routeGlobalKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          },
+                          onCancel: () => Navigator.pop(context),
+                          onLogout: () {
+                            Navigator.pop(context);
+                            // Handle logout logic
+                          },
+                          firstbutton: '',
+                          secondButton: '',
+                          subHeading: 'You can view this case in the ‘New’ cases \nsection with the tag ‘Customer denied’',
+                        ),
+                      );
+                    }
+                   }
+                    else if(provider.isAnimalAvailable==false)
+                    {
+                      print("second");
+                      print(provider.isAnimalAvailable);
+                      print(provider.imageFile);
+                      print(provider.selectedReason);
+                      if (provider.imageFile != null&& provider.imageFileFarmer!=null && provider.selectedReason!=null) {
+                             Navigator.pop(context);
+                       showModalBottomSheet(
+                        backgroundColor: CattleColors.white,
+                        context: context,
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        isScrollControlled: true,
+                        builder: (_) => ConfirmationSheet(
+                          singleButton: "Back To Home",
+                          imagePath:
+                              CattleImagePath.unavailable, // Your SVG/PNG
+                          isSingleButton: true,
+                          title: "Animal not available!",
+                         
+                          onBackToHome: () {
+                            Navigator.pushReplacement(
+                                routeGlobalKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          },
+                          onCancel: () => Navigator.pop(context),
+                          onLogout: () {
+                            Navigator.pop(context);
+                            // Handle logout logic
+                          },
+                          firstbutton: '',
+                          secondButton: '',
+                          subHeading: 'You can view this case in the ‘New’ cases section with the tag ‘Customer denied’',
+                        ),
+                      );
+                      }
+                    }
+                    else if (provider.isFormValid) {
+                        print("third");
+                    Navigator.pushReplacement(
+                                routeGlobalKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (context) => TaggingScreen(currentStepId: "1",type: "",proceed: "",)));
                   }
+                  
                 },
                 child: Text(
                   "Continue",
@@ -467,4 +534,6 @@ class FarmerAvailabilitySheet extends StatelessWidget {
       ),
     );
   }
+
+ 
 }

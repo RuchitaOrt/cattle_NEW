@@ -1,7 +1,10 @@
 import 'package:cattle/Provider/AvailabilityProvider.dart';
+import 'package:cattle/Screens/AddAnimalScreen.dart';
 import 'package:cattle/Screens/AvailabilitySheet.dart';
-import 'package:cattle/Screens/MenuScreen.dart';
+import 'package:cattle/Screens/HomeScreen.dart';
+import 'package:cattle/Screens/PaymentScreen.dart';
 import 'package:cattle/Screens/ReviewClass.dart';
+import 'package:cattle/Screens/TaggingStepper.dart';
 import 'package:cattle/Widget/LogoutConfirmationSheet.dart';
 import 'package:cattle/Widget/createSlideFromLeftRoute.dart';
 import 'package:cattle/enum/caseListingEnum.dart';
@@ -17,7 +20,8 @@ import 'package:provider/provider.dart';
 
 class LeadCard extends StatelessWidget {
   final LeadModel leadList;
-  const LeadCard({super.key, required this.leadList});
+  final String caseType;
+  const LeadCard({super.key, required this.leadList, required this.caseType});
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +72,17 @@ class LeadCard extends StatelessWidget {
                                     leadList.statusShown == "Pending"
                                         ? CattleImagePath.alarm
                                         : leadList.statusShown == "Sync error"
-                                            ? CattleImagePath.cloudalert
+                                            ? CattleImagePath.cloudalert:
+                                            leadList.statusShown=="Payment Pending"?
+                                            CattleImagePath.currency:
+                                            leadList.statusShown=="CKYC Pending"?
+                                          
+
+                                            CattleImagePath.idCard
                                             : CattleImagePath.cloud),
                                 SizedBox(width: 4),
                                 Text(leadList.statusShown!,
-                                    style: leadList.statusShown == "Pending"
+                                    style: (leadList.statusShown == "Pending" || leadList.statusShown == "CKYC Pending" || leadList.statusShown == "Payment Pending")
                                         ? TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
@@ -162,7 +172,7 @@ class LeadCard extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(2)),
                                   color: CattleColors.lightgrey,
                                 ),
-                                child: Text(leadList.tag[0],
+                                child: Text(leadList.proceedType!,
                                     style: TextStyle(fontSize: 12)),
                               ),
                               SizedBox(width: 8),
@@ -173,7 +183,7 @@ class LeadCard extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(2)),
                                   color: CattleColors.lightgrey,
                                 ),
-                                child: Text(leadList.tag[1],
+                                child: Text(leadList.LoanType!,
                                     style: TextStyle(fontSize: 12)),
                               ),
                             ],
@@ -258,16 +268,17 @@ class LeadCard extends StatelessWidget {
               ),
               leadList.status == CaseType.Complete.name
                   ? Container()
-                  : leadList.status == CaseType.Unsynced.name
+                  : leadList.statusShown == "Sync error"
                       ? Container(
                           width: SizeConfig.blockSizeHorizontal * 90,
+                          height: SizeConfig.blockSizeVertical*4,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   leadList.statusShown == "Sync error"
                                       ? CattleColors.orange
                                       : CattleColors.greyButton,
-                              padding: EdgeInsets.symmetric(vertical: 8),
+                              padding: EdgeInsets.symmetric(vertical: 0),
                               shape: RoundedRectangleBorder(
                                 side: BorderSide(
                                     color: leadList.statusShown == "Sync error"
@@ -281,13 +292,104 @@ class LeadCard extends StatelessWidget {
                             child: Text(
                               "Sync Now",
                               style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w800,
                                   color: CattleColors.white),
                             ),
                           ),
                         )
-                      : Row(
+                      : 
+                      
+                      leadList.statusShown == "CKYC Pending"
+                      ? Container(
+                          width: SizeConfig.blockSizeHorizontal * 90,
+                          height: SizeConfig.blockSizeVertical*4,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  leadList.statusShown == "CKYC Pending"
+                                      ? CattleColors.orange
+                                      : CattleColors.greyButton,
+                              padding: EdgeInsets.symmetric(vertical: 0),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color: leadList.statusShown == "CKYC Pending"
+                                        ? CattleColors.orange
+                                        : CattleColors.greyButton,
+                                    width: 0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "Continue",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w800,
+                                  color: CattleColors.white),
+                            ),
+                          ),
+                        )
+                      : 
+                       leadList.statusShown == "Syncing"
+                      ? Container(
+                          width: SizeConfig.blockSizeHorizontal * 90,
+                          height: SizeConfig.blockSizeVertical*4,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  CattleColors.greyButton,
+                              padding: EdgeInsets.symmetric(vertical: 0),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color:CattleColors.greyButton,
+                                    width: 0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "Sync Now",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w800,
+                                  color: CattleColors.white),
+                            ),
+                          ),
+                        )
+                      : 
+                      leadList.statusShown == "Payment Pending"
+                      ? Container(
+                          width: SizeConfig.blockSizeHorizontal * 90,
+                          height: SizeConfig.blockSizeVertical*4,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  leadList.statusShown == "Payment Pending"
+                                      ? CattleColors.orange
+                                      : CattleColors.greyButton,
+                              padding: EdgeInsets.symmetric(vertical: 0),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color: leadList.statusShown == "Payment Pending"
+                                        ? CattleColors.orange
+                                        : CattleColors.greyButton,
+                                    width: 0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "Continue",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w800,
+                                  color: CattleColors.white),
+                            ),
+                          ),
+                        )
+                      : 
+                      Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -299,14 +401,14 @@ class LeadCard extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
                                         color: CattleColors.orange, width: 0.2),
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(0),
                                   ),
                                 ),
                                 onPressed: () {},
                                 child: Text(
                                   leadList.scheduleText!,
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w800,
                                       color: CattleColors.orange),
                                 ),
@@ -320,41 +422,68 @@ class LeadCard extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: CattleColors.orange,
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
+                                      const EdgeInsets.symmetric(vertical: 0),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
                                 onPressed: () {
-                                 showModalBottomSheet(
-  context: context,
-  isScrollControlled: true, // Required for full height behavior
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-  ),
-  builder: (context) => ChangeNotifierProvider(
-    create: (_) => FarmerAvailabilityProvider(),
-    child: LayoutBuilder(
-                builder: (context, constraints) {
-                  double maxHeight = MediaQuery.of(context).size.height * 0.9;
-                  return ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: maxHeight,
-                    ),
-                    child: SingleChildScrollView(
-                      child: FarmerAvailabilitySheet(),
-                    ),
-                  );
-                },
-              )
-  ),
-);
-
+                             
+                             
+                              // Navigator.pushReplacement(
+                              //   routeGlobalKey.currentContext!,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => AddAnimalScreen(loanType: leadList.LoanType!,proceedType: leadList.proceedType!,)));
+                                  
+                          
+                                  //28July
+                                  if (caseType == CaseType.New.name) {
+                                    showModalBottomSheet(
+                                      backgroundColor: CattleColors.white,
+                                      context: context,
+                                      isScrollControlled:
+                                          true, // Required for full height behavior
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(16)),
+                                      ),
+                                      builder: (context) =>
+                                          ChangeNotifierProvider(
+                                              create: (_) =>
+                                                  FarmerAvailabilityProvider(),
+                                              child: LayoutBuilder(
+                                                builder:
+                                                    (context, constraints) {
+                                                  double maxHeight =
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.7;
+                                                  return ConstrainedBox(
+                                                    constraints: BoxConstraints(
+                                                      maxHeight: maxHeight,
+                                                    ),
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      child:
+                                                          FarmerAvailabilitySheet(),
+                                                    ),
+                                                  );
+                                                },
+                                              )),
+                                    );
+                                  }else if(caseType == CattleStrings.strYourLead)
+                                  {
+                                    Navigator.pushReplacement(
+                                routeGlobalKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (context) => TaggingScreen(currentStepId: "1",type: leadList.LoanType!,proceed: leadList.proceedType!,)));
+                                  }
                                 },
                                 child: const Text(
                                   CattleStrings.strStart,
                                   style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
+                                      fontSize: 14, color: Colors.white),
                                 ),
                               ),
                             ),
@@ -439,7 +568,7 @@ class _MoreOptionsMenuState extends State<MoreOptionsMenu> {
                                   Navigator.of(routeGlobalKey.currentContext!)
                                       .push(
                                     createSlideFromLeftRoute(
-                                        const ReviewScreen()),
+                                         ReviewScreen(caseStatus: widget.status,)),
                                   );
                                 },
                                 child: const Text("View Details",
@@ -478,6 +607,15 @@ class _MoreOptionsMenuState extends State<MoreOptionsMenu> {
                                     ),
                                     isScrollControlled: true,
                                     builder: (_) => ConfirmationSheet(
+                                      isSingleButton: false,
+                                      singleButton: "",
+                                      onBackToHome: () {
+                                        Navigator.pushReplacement(
+                                            routeGlobalKey.currentContext!,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeScreen()));
+                                      },
                                       imagePath: CattleImagePath
                                           .helplogo, // Your SVG/PNG
                                       onCancel: () => Navigator.pop(context),

@@ -1,9 +1,11 @@
+import 'package:cattle/Screens/SurveyFolder/SuveyStepper.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Utils/cattle_strings.dart';
 import 'package:cattle/Widget/CaseCard.dart';
 import 'package:cattle/Widget/CreateWithActionCard.dart';
 import 'package:cattle/Widget/DualStyleHeading.dart';
+import 'package:cattle/main.dart';
 import 'package:flutter/material.dart';
 
 class SurveyContent extends StatelessWidget {
@@ -17,13 +19,19 @@ class SurveyContent extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding:  EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CreateWithActionCard(
                     title: CattleStrings.strStartSurvey,
-                    onPressed: () {},
+                    onPressed: () {
+                      print("object");
+                        Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SuveyStepper(currentStepId: "1",)));
+                    },
                   ),
 
                   const SizedBox(height: 24),

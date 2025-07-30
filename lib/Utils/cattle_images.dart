@@ -50,4 +50,27 @@ class CattleImagePath {
 
   static String dropdown = "assets/images/dropdown.svg";
 
+  static String dropup = "assets/images/dropup.svg";
+  static String unavailable = "assets/images/Unavailable.svg";
+  static String draftorder = "assets/images/draft_orders.svg";
+  static String arrowRight = "assets/images/arrow_right.svg";
+  static String refresh = "assets/images/refresh.svg";
+  static String pep = "assets/images/pep.svg";
+  static String CKYC = "assets/images/CKYC.svg";
+
+  static String standardlink = "assets/images/standardlink.svg";
+
+  static String paylater = "assets/images/paylater.svg";
+  static String qrcode = "assets/images/qr_code.svg";
+
+  static String taggingComplete = "assets/images/TaggingComplete.svg";
+  static String paymentcomplete = "assets/images/PaymentComplete.svg";
+  static String qrImage = "assets/images/qrImage.svg";
+  static String likshared = "assets/images/linkshared.svg";
+
+  static String paymentlinkerror = "assets/images/PaymentLinkerror.svg";
+  static String paymentnotcomplete = "assets/images/paymentnotcomplete.svg";
+
+   static String idCard = "assets/images/id_card.svg";
+   static String error = "assets/images/error.svg";
 }

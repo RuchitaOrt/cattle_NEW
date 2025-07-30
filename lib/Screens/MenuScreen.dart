@@ -62,7 +62,13 @@ class _MenuScreenState extends State<MenuScreen> {
   ),
   isScrollControlled: true,
   builder: (_) => ConfirmationSheet(
+    singleButton: "",
     imagePath: CattleImagePath.helplogo, // Your SVG/PNG
+    isSingleButton: false,
+    onBackToHome: ()
+    {
+      
+    },
     onCancel: () => Navigator.pop(context),
     onLogout: () {
       Navigator.pop(context);

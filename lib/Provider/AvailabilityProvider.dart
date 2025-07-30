@@ -8,6 +8,7 @@ class FarmerAvailabilityProvider extends ChangeNotifier {
    bool? isFarmerAvailable;
   bool? isAnimalAvailable;
   File? imageFile;
+  File? imageFileFarmer;
   String? selectedReason;
   double latitude = 0.0;
   double longitude = 0.0;
@@ -22,6 +23,23 @@ class FarmerAvailabilityProvider extends ChangeNotifier {
     }
   }
 
+
+  String? _selectedCategory;
+
+  String? get selectedCategory => _selectedCategory;
+
+  set selectedCategory(String? value) {
+    _selectedCategory = value;
+    notifyListeners(); // ✅ This is needed to update the UI
+  }
+Future<void> pickImageFarmer() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      imageFileFarmer = File(picked.path);
+      notifyListeners();
+    }
+  }
   void setFarmerAvailable(bool value) {
     isFarmerAvailable = value;
     notifyListeners();
@@ -53,52 +71,5 @@ class FarmerAvailabilityProvider extends ChangeNotifier {
 
     return false;
   }
-  // bool? isFarmerAvailable;
-  // bool? isAnimalAvailable;
-  // String? imagePath;
-
-  // String latitude = "18.923168015"; // ideally from GPS
-  // String longitude = "73.360731284";
-
-  // void setFarmerAvailable(bool value) {
-  //   isFarmerAvailable = value;
-  //   notifyListeners();
-  // }
-
-  // void setAnimalAvailable(bool value) {
-  //   isAnimalAvailable = value;
-  //   notifyListeners();
-  // }
-
-  // void setImagePath(String path) {
-  //   imagePath = path;
-  //   notifyListeners();
-  // }
-
-  // bool get isFormValid {
-  //   if (isFarmerAvailable == null || isAnimalAvailable == null) return false;
-  //   if (isFarmerAvailable == false && imagePath == null) return false;
-  //   return true;
-  // }
-
-  // void reset() {
-  //   isFarmerAvailable = null;
-  //   isAnimalAvailable = null;
-  //   imagePath = null;
-  //   notifyListeners();
-  // }
-  //  File? imageFile;
-
-  // Future<void> pickImage() async {
-  //   final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   if (picked != null) {
-  //     imageFile = File(picked.path);
-  //     notifyListeners();
-  //   }
-  // }
-
-  // void clearImage() {
-  //   imageFile = null;
-  //   notifyListeners();
-  // }
+  
 }

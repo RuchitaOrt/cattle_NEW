@@ -33,5 +33,8 @@ class CattleColors {
    static const Color lightOrange =Color(0xffFFF2ED);
    static const Color secondarybluestroke =Color(0xffA8D1FF);
    static const Color secondaryblue =Color(0xffEDF6FF);
+    static const Color marron =Color(0xff8B001C);
+    static const Color neutralF5 =Color(0xffF5F5F5);
+    static const Color grey736 =Color(0xff736F6F);
    
 }

@@ -49,8 +49,12 @@ class Routers {
           builder: (_) => LeadScreen(),
         );
         case ReviewScreen.route:
+        final args = settings.arguments as String?;
+        if (args == null) {
+          return _errorRoute(); // Return an error route if slug is null
+        }
         return MaterialPageRoute(
-          builder: (_) => ReviewScreen(),
+          builder: (_) => ReviewScreen(caseStatus: args,),
         );
          case FilterScreen.route:
         return MaterialPageRoute(

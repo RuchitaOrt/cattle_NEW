@@ -17,7 +17,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignInProvider>(
-      create: (_) => SignInProvider(),
+      // create: (_) => SignInProvider(),
+        create: (_) {
+    final provider = SignInProvider();
+    provider.addListeners(); // ✅ Add this
+    return provider;
+  },
       child: const _LoginScreenContent(),
     );
   }
@@ -31,7 +36,7 @@ Widget build(BuildContext context) {
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(8));
   final BorderSide focusedBorder = const BorderSide(width: 1.0,color: CattleColors.orange,);
   final BorderSide enableBorder = BorderSide(width: 1.0,
-  color: CattleColors.hintGrey,);
+  color: CattleColors.background,);
 
   return Scaffold(
     backgroundColor: CattleColors.white,
@@ -62,6 +67,7 @@ Widget build(BuildContext context) {
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical * 2),
                   CustomTextFieldWidget(
+                    isMandatory: false,
                     title: CattleStrings.strUserID,
                     hintText: CattleStrings.strEnterUserID,
                     onChange: (val) {},

@@ -4,6 +4,7 @@
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/CattleStyles.dart';
 import 'package:cattle/Utils/extentions.dart';
+import 'package:cattle/Widget/TextWithAsterisk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,6 +33,8 @@ class CustomTextFieldWidget extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final List<TextInputFormatter>? inputFormatters;
   final AutovalidateMode autovalidateMode;
+  final bool isMandatory;
+  final Color fillColor;
 
   const CustomTextFieldWidget(
       {super.key,
@@ -57,7 +60,7 @@ class CustomTextFieldWidget extends StatefulWidget {
       this.validator,
       this.suffixIcon,
       this.textCapitalization = TextCapitalization.none,
-      this.autovalidateMode = AutovalidateMode.always});
+      this.autovalidateMode = AutovalidateMode.always,  this.isMandatory=true,  this.fillColor=CattleColors.white,});
 
   @override
   State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
@@ -66,7 +69,7 @@ class CustomTextFieldWidget extends StatefulWidget {
 class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   final FocusNode _focusNode = FocusNode();
   final BorderSide enableBorder = BorderSide(
-    color: CattleColors.hintGrey,
+    color: CattleColors.background,
     // color: CraftColors.neutral20Color,
     width: 1.0,
   );
@@ -141,10 +144,11 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   }
 
   Widget _textFieldLabel() {
-    return  Text(
-            widget.title,
-            style: CattleStyles.textFieldHeading,
-          );
+    return  
+     TextWithAsterisk(text: widget.title,isAstrick: widget.isMandatory,);
+
+      
+  
   }
 
 Widget _textFieldWidget() {
@@ -191,21 +195,21 @@ Widget _textFieldWidget() {
       errorBorder: OutlineInputBorder(borderRadius: borderRadius, borderSide: enableBorder),
       focusedErrorBorder: OutlineInputBorder(borderRadius: borderRadius, borderSide: focusedBorder),
       filled: true,
-      fillColor: CattleColors.white,
+      fillColor: widget.fillColor,
       prefixIcon: widget.leadingIcon != null
           ? Container(
               margin: const EdgeInsets.only(right: 10, left: 10),
               child: widget.leadingIcon,
             )
           : null,
-      prefixIconConstraints: const BoxConstraints(minHeight: 20, minWidth: 20, maxHeight: 40, maxWidth: 40),
+      prefixIconConstraints: const BoxConstraints(minHeight: 20, minWidth: 20, maxHeight: 40, maxWidth: 90),
       suffixIcon: widget.suffixIcon != null
           ? Container(
               margin: const EdgeInsets.only(right: 10, left: 10),
               child: widget.suffixIcon,
             )
           : null,
-      suffixIconConstraints: const BoxConstraints(minHeight: 20, minWidth: 20, maxHeight: 40, maxWidth: 40),
+      suffixIconConstraints: const BoxConstraints(minHeight: 20, minWidth: 20, maxHeight: 40, maxWidth: 90),
       errorMaxLines: 3,
     ),
     style: CattleStyles.textFieldHeading,

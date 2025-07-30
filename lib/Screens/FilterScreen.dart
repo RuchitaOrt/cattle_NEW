@@ -5,6 +5,8 @@ import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Utils/cattle_strings.dart';
 import 'package:cattle/Widget/CommonAppBar.dart';
+import 'package:cattle/Widget/DatePicker.dart';
+import 'package:cattle/Widget/custom_text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -18,13 +20,13 @@ class FilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => FilterProvider(),
-      child: const _FilterScreenBody(),
+      child:  _FilterScreenBody(),
     );
   }
 }
 
 class _FilterScreenBody extends StatelessWidget {
-  const _FilterScreenBody({super.key});
+   _FilterScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +158,8 @@ class _FilterScreenBody extends StatelessWidget {
       ),
     );
   }
-
+TextEditingController fromController=TextEditingController();
+TextEditingController toController=TextEditingController();
   Widget _buildRightPanel(BuildContext context) {
     final provider = context.watch<FilterProvider>();
     final currentTab = provider.tabs[provider.selectedTabIndex];
@@ -165,13 +168,53 @@ class _FilterScreenBody extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("From"),
-          const SizedBox(height: 8),
-          _datePickerTile(context, provider.fromDate, () => provider.pickDate(context, true)),
-          const SizedBox(height: 16),
-          const Text("To"),
-          const SizedBox(height: 8),
-          _datePickerTile(context, provider.toDate, () => provider.pickDate(context, false)),
+          // const Text("From"),
+          // const SizedBox(height: 8),
+          // _datePickerTile(context, provider.fromDate, () 
+          // {
+          //      showCattleDatePicker(
+          //                 context: context, controller: from,
+          //                 );
+          // }
+          // // => provider.pickDate(context, true)
+          
+          // ),
+           CustomTextFieldWidget(
+                    isMandatory: true,
+                    title: CattleStrings.strFromDate,
+                    hintText: CattleStrings.strFromDateHint,
+                    onTapField: () {
+                      showCattleDatePicker(
+                          context: context,
+                          controller: fromController);
+                    },
+                    isFieldReadOnly: true,
+                    onChange: (val) {},
+                    textEditingController: fromController,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    suffixIcon: Icon(Icons.calendar_today,
+                        size: 18, color: CattleColors.orange),
+                  ),
+                   CustomTextFieldWidget(
+                    isMandatory: true,
+                    title: CattleStrings.strToDate,
+                    hintText: CattleStrings.strToDateHint,
+                    onTapField: () {
+                      showCattleDatePicker(
+                          context: context,
+                          controller: toController);
+                    },
+                    isFieldReadOnly: true,
+                    onChange: (val) {},
+                    textEditingController: toController,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    suffixIcon: Icon(Icons.calendar_today,
+                        size: 18, color: CattleColors.orange),
+                  ),
+          // const SizedBox(height: 16),
+          // const Text("To"),
+          // const SizedBox(height: 8),
+          // _datePickerTile(context, provider.toDate, () => provider.pickDate(context, false)),
         ],
       );
     }

@@ -52,7 +52,7 @@ class _LeadCardSliderState extends State<LeadCardSlider> {
           shrinkWrap: true,
           controller: _scrollController,
           itemCount: widget.leadList.length,
-          itemExtent: widget.caseType==CaseType.Complete.name?170: itemHeight,
+          itemExtent: widget.caseType==CaseType.Complete.name?175: itemHeight,
          
           itemBuilder: (context, index) => _buildCard(index,widget.leadList),
         ),
@@ -77,7 +77,7 @@ class _LeadCardSliderState extends State<LeadCardSlider> {
           ),
         ],
       ),
-      child:  LeadCard(leadList:  leadList[index],), // Replace with your actual widget
+      child:  LeadCard(leadList:  leadList[index],caseType: widget.caseType,), // Replace with your actual widget
     );
   }
 }
