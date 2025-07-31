@@ -27,7 +27,50 @@ class CattleImagePath {
   static String location = "assets/images/location_on.svg";
   static String totalcases = "assets/images/totalCases.svg";
   static String lead = "assets/images/lead.svg";
-   static String verify = "assets/images/verify.svg";
-     static String edit = "assets/images/edit.svg";
-       static String filter = "assets/images/filter.svg";
+  static String verify = "assets/images/verify.svg";
+  static String edit = "assets/images/edit.svg";
+  static String filter = "assets/images/filter.svg";
+
+  static String alarm = "assets/images/alarm.svg";
+  static String currency = "assets/images/currency.svg";
+  static String cloudalert = "assets/images/cloud_alert.svg";
+  static String cloud = "assets/images/cloud.svg";
+
+  static String callred = "assets/images/callred.svg";
+  static String markcircle = "assets/images/check_circle.svg";
+  static String listalt = "assets/images/list_alt.svg";
+  static String checkgreen = "assets/images/check_green.svg";
+  static String closeorange = "assets/images/Closeorange.svg";
+  static String searchgrey = "assets/images/search_grey.svg";
+
+  static String nosearch = "assets/images/nosearch.svg";
+  static String nofilter = "assets/images/nofilter.svg";
+  static String info = "assets/images/info.svg";
+  static String addaphoto = "assets/images/add_a_photo.svg";
+
+  static String dropdown = "assets/images/dropdown.svg";
+
+  static String dropup = "assets/images/dropup.svg";
+  static String unavailable = "assets/images/Unavailable.svg";
+  static String draftorder = "assets/images/draft_orders.svg";
+  static String arrowRight = "assets/images/arrow_right.svg";
+  static String refresh = "assets/images/refresh.svg";
+  static String pep = "assets/images/pep.svg";
+  static String CKYC = "assets/images/CKYC.svg";
+
+  static String standardlink = "assets/images/standardlink.svg";
+
+  static String paylater = "assets/images/paylater.svg";
+  static String qrcode = "assets/images/qr_code.svg";
+
+  static String taggingComplete = "assets/images/TaggingComplete.svg";
+  static String paymentcomplete = "assets/images/PaymentComplete.svg";
+  static String qrImage = "assets/images/qrImage.svg";
+  static String likshared = "assets/images/linkshared.svg";
+
+  static String paymentlinkerror = "assets/images/PaymentLinkerror.svg";
+  static String paymentnotcomplete = "assets/images/paymentnotcomplete.svg";
+
+   static String idCard = "assets/images/id_card.svg";
+   static String error = "assets/images/error.svg";
 }

@@ -11,17 +11,29 @@ class SignInProvider with ChangeNotifier {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
  
 
-  bool rememberMe = false;
+ bool _rememberMe = false;
 
+  bool get rememberMe => _rememberMe;
+
+  set rememberMe(bool value) {
+    _rememberMe = value;
+    notifyListeners(); // ✅ triggers UI update
+  }
   void toggleRememberMe(bool? value) {
     rememberMe = value ?? false;
     notifyListeners();
   }
  bool get isFormValid {
-    return userIDController.text.trim().isNotEmpty &&
-        passwordController.text.trim().isNotEmpty &&
-        rememberMe;
+    return (userIDController.text.trim().isNotEmpty && passwordController.text.trim().isNotEmpty && rememberMe);
   }
+
+    void addListeners() {
+    userIDController.addListener(notifyListeners);
+    passwordController.addListener(notifyListeners);
+    
+   
+  }
+
   // Getter for formKey
   GlobalKey<FormState> get formKey => _formKey;
   bool get isPasswordObscured => _isPasswordObscured;

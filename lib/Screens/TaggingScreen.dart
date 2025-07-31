@@ -1,3 +1,5 @@
+import 'package:cattle/Provider/CreateLeadandCaseProvider.dart';
+import 'package:cattle/Screens/CreateLeadCaseSheet.dart';
 import 'package:cattle/Screens/LeadScreen.dart';
 import 'package:cattle/Screens/ListingScreen.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
@@ -10,7 +12,9 @@ import 'package:cattle/Widget/LeadCard.dart';
 import 'package:cattle/Widget/createSlideFromLeftRoute.dart';
 import 'package:cattle/enum/caseListingEnum.dart';
 import 'package:cattle/main.dart';
+import 'package:cattle/model/LeadModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TaggingHomeScreen extends StatelessWidget {
   const TaggingHomeScreen({super.key});
@@ -18,18 +22,47 @@ class TaggingHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: CattleColors.white,
+      backgroundColor: CattleColors.white,
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding:  EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CreateWithActionCard(
                     title: CattleStrings.strCreatecase,
-                    onPressed: () {},
+                    onPressed: () {
+                       print("Add clcik");
+                      print("Add clcik");
+                      showModalBottomSheet(
+                        backgroundColor: CattleColors.white,
+                        context: context,
+                        isScrollControlled:
+                            true, // Required for full height behavior
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(16)),
+                        ),
+                        builder: (context) => ChangeNotifierProvider(
+                            create: (_) => CreateLeadandCaseProvider(),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                double maxHeight =
+                                    MediaQuery.of(context).size.height * 0.7;
+                                return ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    maxHeight: maxHeight,
+                                  ),
+                                  child: SingleChildScrollView(
+                                    child: CreateLeadCaseSheet(),
+                                  ),
+                                );
+                              },
+                            )),
+                      );
+                    },
                   ),
 
                   const SizedBox(height: 24),
@@ -58,14 +91,14 @@ class TaggingHomeScreen extends StatelessWidget {
                           iconPath: CattleImagePath.newCase,
                           color: Colors.blue,
                           title: "New",
-                          onclick: ()
-                          {
+                          onclick: () {
                             Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.newCase),
-  ),
-);
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ListingScreen(caseType: CaseType.New),
+                              ),
+                            );
                           },
                         ),
                         CaseCard(
@@ -73,41 +106,45 @@ class TaggingHomeScreen extends StatelessWidget {
                             count: "07",
                             iconPath: CattleImagePath.pendingCase,
                             color: Colors.red,
-                             onclick: ()
-                          {
-                            Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.pending),
-  ),
-);}),
+                            onclick: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      ListingScreen(caseType: CaseType.Pending),
+                                ),
+                              );
+                            }),
                         CaseCard(
-                            title: "Unsynced",
-                            count: "11",
-                            iconPath: CattleImagePath.unsyncCase,
-                            color: CattleColors.orange,
-                             onclick: ()
-                          {
+                          title: "Unsynced",
+                          count: "11",
+                          iconPath: CattleImagePath.unsyncCase,
+                          color: CattleColors.orange,
+                          onclick: () {
                             Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.unsynced),
-  ),);},
-),
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ListingScreen(caseType: CaseType.Unsynced),
+                              ),
+                            );
+                          },
+                        ),
                         CaseCard(
-                            title: "Complete",
-                            count: "24",
-                            iconPath: CattleImagePath.completeCase,
-                            color: Colors.green,
-                             onclick: ()
-                          {
+                          title: "Complete",
+                          count: "24",
+                          iconPath: CattleImagePath.completeCase,
+                          color: Colors.green,
+                          onclick: () {
                             Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => ListingScreen(caseType: CaseType.complete),
-  ),
-);
-                          },),
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ListingScreen(caseType: CaseType.Complete),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -121,12 +158,10 @@ class TaggingHomeScreen extends StatelessWidget {
                         second: " leads",
                       ),
                       GestureDetector(
-                        onTap: ()
-                        {
-                              
- Navigator.of(routeGlobalKey.currentContext!).push(
-  createSlideFromLeftRoute(const LeadScreen()),
-);
+                        onTap: () {
+                          Navigator.of(routeGlobalKey.currentContext!).push(
+                            createSlideFromLeftRoute(const LeadScreen()),
+                          );
                         },
                         child: Text(CattleStrings.strViewAll,
                             style: TextStyle(
@@ -161,8 +196,34 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
   final PageController _pageController = PageController(viewportFraction: 1);
   int _currentPage = 0;
 
-  final int totalCards = 6; // You can make this dynamic if needed
-
+  final List<LeadModel> yourLeadsListing = [
+    LeadModel(
+      name: "Rajeev Ranjan",
+       LoanType: "LOANEE",
+    proceedType: "NON-NLM",
+      tag: ["NON-NLM", "NON-LOANEE"],
+      village: "Khushdeva",
+      date: "29 Apr '25",
+      status: "New",
+      statusShown: "Pending",
+      daysLeft: "2 Days left",
+      scheduleText: "Schedule",
+      buttonText: "Start",
+    ),
+    LeadModel(
+      name: "Ashok Jha",
+       LoanType: "LOANEE",
+    proceedType: "NLM",
+      tag: ["NON-NLM", "NON-LOANEE"],
+      village: "Khushdeva",
+      date: "29 Apr '25",
+      statusShown: "Pending",
+      status: "New",
+      daysLeft: "",
+      scheduleText: "Schedule",
+      buttonText: "Start",
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -171,7 +232,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
           height: 250, // Adjust height based on card content
           child: PageView.builder(
             controller: _pageController,
-            itemCount: totalCards,
+            itemCount: yourLeadsListing.length,
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
@@ -188,7 +249,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
         const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(totalCards, (index) {
+          children: List.generate(yourLeadsListing.length, (index) {
             bool isSelected = _currentPage == index;
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -206,7 +267,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
               child: isSelected
                   ? Center(
                       child: Text(
-                        "${index + 1}/$totalCards",
+                        "${index + 1}/${yourLeadsListing.length}",
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -237,9 +298,9 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
           ),
         ],
       ),
-      child: LeadCard(), // Replace with your existing widget
+      child: LeadCard(
+        leadList: yourLeadsListing[index],caseType: CattleStrings.strYourLead,
+      ), // Replace with your existing widget
     );
   }
 }
-
-

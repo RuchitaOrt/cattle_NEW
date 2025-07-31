@@ -1,8 +1,39 @@
 enum CaseType {
-  newCase,
-  pending,
-  unsynced,
-  complete,
+  New,
+  Pending,
+  Unsynced,
+  Complete,
+   Expiring
+}
+enum LoanType {
+  LOANEE,
+  NON_LOANEE,
+}
+enum ProceedType {
+  NLM,
+  NON_NLM,
+}
+
+
+extension LoanTypeExtension on LoanType {
+  String get displayName {
+    switch (this) {
+      case LoanType.LOANEE:
+        return "LOANEE";
+      case LoanType.NON_LOANEE:
+        return "NON-LOANEE";
+    }
+  }
+}
+extension ProceedTypeExtension on ProceedType {
+  String get procedName {
+    switch (this) {
+      case ProceedType.NLM:
+        return "NLM";
+      case ProceedType.NON_NLM:
+        return "NON-NLM";
+    }
+  }
 }
 class CaseItem {
   final String name;

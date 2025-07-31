@@ -1,15 +1,19 @@
 class LeadModel {
   final String name;
-  final String tag;
+  final List<String> tag;
   final String village;
   final String date;
   final String status;
+  final String? statusShown;
   final String daysLeft;
+  final bool isExpiringsoon;
   final String? imageUrl;
   final String? scheduleText;
   final String? buttonText;
+  final String? LoanType;
+  final String? proceedType; 
 
-  LeadModel({
+  LeadModel( {
     required this.name,
     required this.tag,
     required this.village,
@@ -19,6 +23,9 @@ class LeadModel {
     this.imageUrl,
     this.scheduleText,
     this.buttonText,
+    this.isExpiringsoon=false,
+    this.statusShown, 
+    this.LoanType, this.proceedType, 
   });
 
   factory LeadModel.fromJson(Map<String, dynamic> json) {
@@ -32,7 +39,10 @@ class LeadModel {
       imageUrl: json['imageUrl'],
       scheduleText: json['scheduleText'],
       buttonText: json['buttonText'],
+       LoanType: json['LoanType'] ?? '',
+        proceedType: json['proceedType'] ?? '',
     );
+
   }
 
   Map<String, dynamic> toJson() {

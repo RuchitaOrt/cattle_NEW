@@ -61,13 +61,21 @@ class _MenuScreenState extends State<MenuScreen> {
     borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
   ),
   isScrollControlled: true,
-  builder: (_) => LogoutConfirmationSheet(
+  builder: (_) => ConfirmationSheet(
+    singleButton: "",
     imagePath: CattleImagePath.helplogo, // Your SVG/PNG
+    isSingleButton: false,
+    onBackToHome: ()
+    {
+      
+    },
     onCancel: () => Navigator.pop(context),
     onLogout: () {
       Navigator.pop(context);
       // Handle logout logic
-    },
+    }, firstbutton: 'Cancel',
+    secondButton: 'Logout',
+    subHeading: '',
   ),
 );
 
