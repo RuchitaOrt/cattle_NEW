@@ -372,7 +372,7 @@ SizedBox(
     return Scaffold(
       appBar: CommonAppBar(
         title: CattleStrings.strApplicationDetail,
-        stepsTitle: "STEP 1/5",
+        stepsTitle: "STEP 1/ 5",
       ),
       backgroundColor: CattleColors.white,
       body: Stack(
@@ -525,6 +525,7 @@ backgroundColor: widget.type == LoanType.LOANEE.displayName
               ? CattleColors.orange
               : CattleColors.greyButton)
           : CattleColors.greyButton,
+           disabledBackgroundColor: CattleColors.greyButton,
                           ),
                           onPressed:(widget.type == LoanType.LOANEE.displayName &&
             taggingFormProvider.isLOANEEFormValid)
@@ -543,7 +544,7 @@ Navigator.push(context, MaterialPageRoute(builder: (_) =>  AddAnimalScreen(loanT
             : null,
                           child: Text(
                             "Continue",
-                            style: TextStyle(color: CattleColors.white),
+                            style: TextStyle(color: CattleColors.white,fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),

@@ -27,115 +27,119 @@ class ConfirmationSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child:
-             GestureDetector(
-               onTap: () => Navigator.of(context).pop(),
-               child: SvgPicture.asset(
-                           CattleImagePath.close,
-                         
-                         ),
-             ),
-             
-          ),
-          SvgPicture.asset(
-            imagePath,
-          
-          ),
-          // const SizedBox(height: 8),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style:  TextStyle(
-              color: CattleColors.blackshade,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      width: screenWidth,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child:
+               GestureDetector(
+                 onTap: () => Navigator.of(context).pop(),
+                 child: SvgPicture.asset(
+                             CattleImagePath.close,
+                           
+                           ),
+               ),
+               
             ),
-          ),
-          const SizedBox(height: 20),
-         refrenceNumber!=""?  Container(
-          margin: EdgeInsets.only(bottom: 20),
-            decoration: BoxDecoration(
-              color: CattleColors.lightergrey,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: CattleColors.lightgrey)
+            SvgPicture.asset(
+              imagePath,
+            
             ),
-             child:  Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(text: "Reference number ", style: CattleStyles.neutral90w30014.copyWith(fontSize: 12)),
-                      TextSpan(text: refrenceNumber, style: CattleStyles.blacklightw50016.copyWith(fontSize: 12,fontWeight: FontWeight.w600)),
-                    ],
+            // const SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style:  TextStyle(
+                color: CattleColors.blackshade,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 20),
+           refrenceNumber!=""?  Container(
+            margin: EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: CattleColors.lightergrey,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: CattleColors.lightgrey)
+              ),
+               child:  Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(text: "Reference number ", style: CattleStyles.neutral90w30014.copyWith(fontSize: 12)),
+                        TextSpan(text: refrenceNumber, style: CattleStyles.blacklightw50016.copyWith(fontSize: 12,fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                  ),
+               ),
+             ):Container(),
+          subHeading!=""?  Column(
+              children: [
+                Text(
+                  subHeading,
+                  textAlign: TextAlign.center,
+                  style:  TextStyle(
+                    color: CattleColors.grey75,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
+                 const SizedBox(height: 24),
+              ],
+            ):Container(),
+      
+         isSingleButton? Container(
+          width: SizeConfig.blockSizeHorizontal*90,
+      
+           child: ElevatedButton(
+             onPressed: onBackToHome,
+             style: ElevatedButton.styleFrom(
+               backgroundColor: CattleColors.orange,
+               shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.circular(8)),
              ),
-           ):Container(),
-        subHeading!=""?  Column(
-            children: [
-              Text(
-                subHeading,
-                textAlign: TextAlign.center,
-                style:  TextStyle(
-                  color: CattleColors.grey75,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-               const SizedBox(height: 24),
-            ],
-          ):Container(),
-
-       isSingleButton? Container(
-        width: SizeConfig.blockSizeHorizontal*90,
-
-         child: ElevatedButton(
-           onPressed: onBackToHome,
-           style: ElevatedButton.styleFrom(
-             backgroundColor: CattleColors.orange,
-             shape: RoundedRectangleBorder(
-                 borderRadius: BorderRadius.circular(8)),
+             child:  Text(singleButton,
+                 style: TextStyle(color: Colors.white)),
            ),
-           child:  Text(singleButton,
-               style: TextStyle(color: Colors.white)),
-         ),
-       ):   Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: onCancel,
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: CattleColors.orange,),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+         ):   Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: onCancel,
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: CattleColors.orange,),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child:  Text(firstbutton,
+                        style: TextStyle(color: CattleColors.orange,)),
                   ),
-                  child:  Text(firstbutton,
-                      style: TextStyle(color: CattleColors.orange,)),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: onLogout,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: CattleColors.orange,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onLogout,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: CattleColors.orange,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child:  Text(secondButton,
+                        style: TextStyle(color: Colors.white)),
                   ),
-                  child:  Text(secondButton,
-                      style: TextStyle(color: Colors.white)),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

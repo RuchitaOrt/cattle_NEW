@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class WalkthroughProvider extends ChangeNotifier {
   final PageController pageController = PageController();
   int currentIndex = 0;
+bool get shouldZoom => currentIndex == 1;
 
   final List<double> barFillProgress = [0.0, 0.0, 0.0, 0.0];
 

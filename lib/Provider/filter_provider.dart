@@ -1,3 +1,5 @@
+import 'package:cattle/Screens/NoFilterScreen.dart';
+import 'package:cattle/main.dart';
 import 'package:flutter/material.dart';
 
 class FilterProvider extends ChangeNotifier {
@@ -35,7 +37,8 @@ class FilterProvider extends ChangeNotifier {
       "5 of 10", "6 of 10", "7 of 10", "8 of 10", "9 of 10", "10 of 10"
     ],
   };
-
+TextEditingController fromController=TextEditingController();
+TextEditingController toController=TextEditingController();
   List<String> result = ["r"]; // Used to control visibility in UI
 
   void selectTab(int index) {
@@ -88,7 +91,8 @@ class FilterProvider extends ChangeNotifier {
   }
 
   void resetFilters() {
-    fromDate = null;
+    fromController.text="";
+    toController.text="";
     toDate = null;
     result = []; // Hide results section again
     selectedOptions.forEach((key, value) => value.clear());
@@ -98,9 +102,14 @@ class FilterProvider extends ChangeNotifier {
   void applyFilters() {
     final filters = getAppliedFilters();
     print("Applied Filters: $filters");
-
+    Navigator.of(
+                routeGlobalKey.currentContext!,
+              ).pushNamedAndRemoveUntil(
+                NoFilterScreen.route,
+                (route) => false,
+              );
     // Show the result section now
-    result.clear();
+    // result.clear();
     notifyListeners();
   }
 
@@ -124,4 +133,21 @@ class FilterProvider extends ChangeNotifier {
     ];
     return months[m - 1];
   }
+  TextEditingController villageSearchController = TextEditingController();
+String villageSearchTerm = '';
+
+void updateVillageSearch(String value) {
+  villageSearchTerm = value.toLowerCase();
+  notifyListeners();
+}
+List<String> getFilteredVillageOptions() {
+  if (villageSearchTerm.isEmpty) {
+    return options["Village"] ?? [];
+  } else {
+    return (options["Village"] ?? [])
+        .where((v) => v.toLowerCase().contains(villageSearchTerm))
+        .toList();
+  }
+}
+
 }

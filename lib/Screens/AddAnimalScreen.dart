@@ -51,7 +51,7 @@ bool _isAnimalFormComplete(Map<String, dynamic> formData) {
     return Scaffold(
       appBar: CommonAppBar(
         title: CattleStrings.strAnimalDetail,
-        stepsTitle: "STEP 2/5",
+        stepsTitle: "STEP 2/ 5",
       ),
       backgroundColor: CattleColors.white,
       body: Stack(
@@ -188,6 +188,7 @@ if (result != null && result is Map<String, dynamic>) {
                     child: OutlinedButton(
                       onPressed: () {
                         showModalBottomSheet(
+                          
                           backgroundColor: CattleColors.white,
                           context: context,
                           shape: const RoundedRectangleBorder(
@@ -234,7 +235,7 @@ if (result != null && result is Map<String, dynamic>) {
         createSlideFromBottomRoute( SignatureScreen(loanType: widget.loanType,proceedType: widget.proceedType,)),
       );
                       } : null,
-                      child: const Text("Continue", style: TextStyle(color: Colors.white)),
+                      child:  Text("Continue", style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700)),
                     ),
                   ),
                 ],

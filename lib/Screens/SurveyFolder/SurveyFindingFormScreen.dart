@@ -163,7 +163,7 @@ void initState() {
     return Scaffold(
       appBar: CommonAppBar(
         title: CattleStrings.strFindings,
-        stepsTitle: "STEP 3/3",
+        stepsTitle: "STEP 3/ 3",
       ),
       backgroundColor: CattleColors.white,
       body: Stack(
@@ -304,6 +304,7 @@ void initState() {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             backgroundColor:suveyFormProvider.isFindingFieldSubmitted?CattleColors.orange: CattleColors.greyButton,
+                             disabledBackgroundColor: CattleColors.greyButton,
                           ),
                           onPressed: () {
                             if(suveyFormProvider.isFindingFieldSubmitted)
@@ -344,7 +345,7 @@ void initState() {
                           },
                           child: Text(
                             "Submit",
-                            style: TextStyle(color: CattleColors.white),
+                            style: TextStyle(color: CattleColors.white,fontWeight:FontWeight.bold ),
                           ),
                         ),
                       ),

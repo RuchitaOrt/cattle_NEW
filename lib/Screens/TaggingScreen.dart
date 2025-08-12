@@ -39,6 +39,7 @@ class TaggingHomeScreen extends StatelessWidget {
                       showModalBottomSheet(
                         backgroundColor: CattleColors.white,
                         context: context,
+                        
                         isScrollControlled:
                             true, // Required for full height behavior
                         shape: const RoundedRectangleBorder(
@@ -64,13 +65,13 @@ class TaggingHomeScreen extends StatelessWidget {
                       );
                     },
                   ),
-
+      
                   const SizedBox(height: 24),
                   const DualStyleHeading(
                     first: "Your",
                     second: " Cases",
                   ),
-
+      
                   const SizedBox(height: 20),
                   // Cases grid
                   MediaQuery.removePadding(
@@ -82,7 +83,7 @@ class TaggingHomeScreen extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
-                      childAspectRatio: 1.2,
+                      childAspectRatio: 1.4,
                       padding:
                           EdgeInsets.zero, // also ensure no internal padding
                       children: [
@@ -148,7 +149,7 @@ class TaggingHomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
+      
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,19 +160,26 @@ class TaggingHomeScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(routeGlobalKey.currentContext!).push(
-                            createSlideFromLeftRoute(const LeadScreen()),
-                          );
+                          // Navigator.of(routeGlobalKey.currentContext!).push(
+                          //   createSlideFromLeftRoute(const LeadScreen()),
+                          // );
+                           Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    LeadScreen()),
+                              
+                            );
                         },
                         child: Text(CattleStrings.strViewAll,
                             style: TextStyle(
-                                color: CattleColors.orange, fontSize: 14)),
+                                color: CattleColors.orange, fontSize: 14,fontWeight: FontWeight.w700)),
                       ),
                     ],
                   ),
-
+      
                   const SizedBox(height: 12),
-
+      
                   // Leads Card
                   TaggingCardSlider(),
                   const SizedBox(height: 16),
@@ -219,7 +227,7 @@ class _TaggingCardSliderState extends State<TaggingCardSlider> {
       date: "29 Apr '25",
       statusShown: "Pending",
       status: "New",
-      daysLeft: "",
+      daysLeft: "2 Days left",
       scheduleText: "Schedule",
       buttonText: "Start",
     ),

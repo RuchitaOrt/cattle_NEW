@@ -1,10 +1,12 @@
 import 'package:cattle/Screens/HomeScreen.dart';
+import 'package:cattle/Widget/createSlideFromLeftRoute.dart';
 import 'package:cattle/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cattle/Utils/cattle_colors.dart';
 import 'package:cattle/Utils/cattle_images.dart';
 import 'package:cattle/Utils/sizeConfig.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -36,10 +38,18 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
             // Back button
             IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: CattleColors.blacklight),
-              onPressed: onBack ?? () =>  Navigator.pushReplacement(
-                                routeGlobalKey.currentContext!,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen())),
+              onPressed: onBack ?? () =>  
+               Navigator.of(context).push(
+  createSlideFromTopRoute(
+    HomeScreen(
+    
+    )
+  ),
+)
+              // Navigator.pushReplacement(
+              //                   routeGlobalKey.currentContext!,
+              //                   MaterialPageRoute(
+              //                       builder: (context) => HomeScreen())),
             ),
 
             // Title and optional stepTitle
@@ -51,17 +61,21 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Text(
                     title,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: CattleColors.blackshade,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style:  
+                    GoogleFonts.mulish(
+  fontWeight: FontWeight.w800, // ExtraBold
+  color: CattleColors.blackshade,
+  fontSize: 22,
+)
+
+                    
                   ),
                   if (stepsTitle.isNotEmpty)
                     Text(
                       stepsTitle,
-                      style: const TextStyle(
+                      style:  TextStyle(
                         color: CattleColors.grey75,
+                        fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
                     ),

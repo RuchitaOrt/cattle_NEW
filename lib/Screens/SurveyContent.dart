@@ -51,7 +51,7 @@ class SurveyContent extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
-                      childAspectRatio: 1.2,
+                      childAspectRatio: 1.4,
                       padding:
                           EdgeInsets.zero, // also ensure no internal padding
                       children: [

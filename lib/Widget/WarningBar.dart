@@ -84,7 +84,7 @@ class _StickyWarningBarState extends State<StickyWarningBar>
                 Expanded(
                   child: Text(
                     widget.message,
-                    style: const TextStyle(color:  CattleColors.error600Color,fontSize: 12),
+                    style:  TextStyle(color:  CattleColors.darkred,fontSize: 14,fontWeight: FontWeight.w700),
                   ),
                 ),
                 Container(
@@ -98,7 +98,7 @@ class _StickyWarningBarState extends State<StickyWarningBar>
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
-                    child: Text(widget.actionText,style: TextStyle(color: CattleColors.white,fontSize: 12),),
+                    child: Text(widget.actionText,style: TextStyle(color: CattleColors.white,fontSize: 14,fontWeight: FontWeight.w700),),
                   ),
                 )
               ],

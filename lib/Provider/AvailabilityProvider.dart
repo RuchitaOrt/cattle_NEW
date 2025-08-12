@@ -9,9 +9,9 @@ class FarmerAvailabilityProvider extends ChangeNotifier {
   bool? isAnimalAvailable;
   File? imageFile;
   File? imageFileFarmer;
-  String? selectedReason;
-  double latitude = 0.0;
-  double longitude = 0.0;
+  // String? selectedReason;
+  double latitude = 18.923168015;
+  double longitude = 73.360731284;
 
   // -- Pick Image
   Future<void> pickImage() async {
@@ -50,11 +50,15 @@ Future<void> pickImageFarmer() async {
     notifyListeners();
   }
 
-  void setReason(String value) {
-    selectedReason = value;
-    notifyListeners();
-  }
+ 
+  String? _selectedReason;
 
+  String? get selectedReason => _selectedReason;
+
+  set selectedReason(String? value) {
+    _selectedReason = value;
+    notifyListeners(); // ✅ This is needed to update the UI
+  }
   bool get isFormValid {
     // Case 1: Both available → allow
     if (isFarmerAvailable == true && isAnimalAvailable == true) return true;

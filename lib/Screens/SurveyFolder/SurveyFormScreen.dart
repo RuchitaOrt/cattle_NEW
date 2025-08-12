@@ -481,7 +481,7 @@ void initState() {
     return Scaffold(
       appBar: CommonAppBar(
         title: CattleStrings.strClaimantdetail,
-        stepsTitle: "STEP 1/3",
+        stepsTitle: "STEP 1/ 3",
       ),
       backgroundColor: CattleColors.white,
       body: Stack(
@@ -622,6 +622,7 @@ void initState() {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             backgroundColor:suveyFormProvider.isFormValid?CattleColors.orange: CattleColors.greyButton,
+                             disabledBackgroundColor: CattleColors.greyButton,
                           ),
                           onPressed: () {
                             if(suveyFormProvider.isFormValid)
@@ -634,7 +635,7 @@ void initState() {
                           },
                           child: Text(
                             "Continue",
-                            style: TextStyle(color: CattleColors.white),
+                            style: TextStyle(color: CattleColors.white,fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),

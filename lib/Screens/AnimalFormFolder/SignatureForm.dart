@@ -332,7 +332,7 @@ class _SignatureFormScreenContentState extends State<_SignatureFormScreenContent
     return Scaffold(
       appBar: CommonAppBar(
         title: CattleStrings.strSignature,
-        stepsTitle: "STEP 3/5",
+        stepsTitle: "STEP 3/ 5",
       ),
       backgroundColor: CattleColors.white,
       body: Stack(

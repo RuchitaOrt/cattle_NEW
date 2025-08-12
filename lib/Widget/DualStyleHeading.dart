@@ -16,7 +16,7 @@ class DualStyleHeading extends StatelessWidget {
     return RichText(
       text: TextSpan(
         children: [
-          TextSpan(text: first, style: CattleStyles.neutral90w60014),
+          TextSpan(text: first, style: CattleStyles.neutral90w40014),
           TextSpan(text: second, style: CattleStyles.blacklightw60014),
         ],
       ),
