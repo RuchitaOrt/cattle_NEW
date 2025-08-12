@@ -214,6 +214,7 @@ class _SurveyMediaFormState extends State<SurveyMediaForm> {
                             backgroundColor: suveyFormProvider.isMediaComplete
         ? CattleColors.orange
         : CattleColors.greyButton,
+         disabledBackgroundColor: CattleColors.greyButton,
                           ),
                           onPressed: () {
                             if(suveyFormProvider.isMediaComplete)
@@ -227,7 +228,7 @@ class _SurveyMediaFormState extends State<SurveyMediaForm> {
                           },
                           child: Text(
                             "Continue",
-                            style: TextStyle(color: CattleColors.white),
+                            style: TextStyle(color: CattleColors.white,fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),

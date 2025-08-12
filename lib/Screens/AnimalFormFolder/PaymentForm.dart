@@ -97,7 +97,7 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
     return Scaffold(
       appBar: CommonAppBar(
         title: CattleStrings.strPayment,
-         stepsTitle: "STEP 5/5",
+         stepsTitle: "STEP 5/ 5",
       ),
       backgroundColor: CattleColors.white,
        bottomNavigationBar:

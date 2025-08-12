@@ -34,23 +34,13 @@ class _FilterScreenBody extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: CattleColors.white,
-      appBar: const CommonAppBar(title: CattleStrings.strFilter),
-      body: provider.result.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(CattleImagePath.nofilter),
-                  Text(CattleStrings.strNoSearchHeading,
-                      style: CattleStyles.blacklightw60014),
-                  const SizedBox(height: 8),
-                  Text(CattleStrings.strNoFilterSubHeading,
-                      textAlign: TextAlign.center,
-                      style: CattleStyles.subHeading),
-                ],
-              ),
-            )
-          : Column(
+      appBar:  CommonAppBar(title: CattleStrings.strFilter,onBack: ()
+      {
+Navigator.pop(context);
+      },),
+      body:
+     
+           Column(
               children: [
                 Expanded(
                   child: Row(
@@ -104,7 +94,7 @@ class _FilterScreenBody extends StatelessWidget {
                             backgroundColor: CattleColors.orange,
                           ),
                           child: const Text("Apply",
-                              style: TextStyle(color: CattleColors.white)),
+                              style: TextStyle(color: CattleColors.white,fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ],
@@ -158,55 +148,44 @@ class _FilterScreenBody extends StatelessWidget {
       ),
     );
   }
-TextEditingController fromController=TextEditingController();
-TextEditingController toController=TextEditingController();
-  Widget _buildRightPanel(BuildContext context) {
-    final provider = context.watch<FilterProvider>();
-    final currentTab = provider.tabs[provider.selectedTabIndex];
 
-    if (currentTab == "Date") {
-      return Column(
+Widget _buildRightPanel(BuildContext context) {
+  final provider = context.watch<FilterProvider>();
+  final currentTab = provider.tabs[provider.selectedTabIndex];
+
+  if (currentTab == "Date") {
+        return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const Text("From"),
-          // const SizedBox(height: 8),
-          // _datePickerTile(context, provider.fromDate, () 
-          // {
-          //      showCattleDatePicker(
-          //                 context: context, controller: from,
-          //                 );
-          // }
-          // // => provider.pickDate(context, true)
-          
-          // ),
+         
            CustomTextFieldWidget(
-                    isMandatory: true,
+                    isMandatory: false,
                     title: CattleStrings.strFromDate,
                     hintText: CattleStrings.strFromDateHint,
                     onTapField: () {
                       showCattleDatePicker(
                           context: context,
-                          controller: fromController);
+                          controller: provider.fromController);
                     },
                     isFieldReadOnly: true,
                     onChange: (val) {},
-                    textEditingController: fromController,
+                    textEditingController: provider.fromController,
                     autovalidateMode: AutovalidateMode.disabled,
                     suffixIcon: Icon(Icons.calendar_today,
                         size: 18, color: CattleColors.orange),
                   ),
                    CustomTextFieldWidget(
-                    isMandatory: true,
+                     isMandatory: false,
                     title: CattleStrings.strToDate,
                     hintText: CattleStrings.strToDateHint,
                     onTapField: () {
                       showCattleDatePicker(
                           context: context,
-                          controller: toController);
+                          controller: provider.toController);
                     },
                     isFieldReadOnly: true,
                     onChange: (val) {},
-                    textEditingController: toController,
+                    textEditingController: provider.toController,
                     autovalidateMode: AutovalidateMode.disabled,
                     suffixIcon: Icon(Icons.calendar_today,
                         size: 18, color: CattleColors.orange),
@@ -217,43 +196,172 @@ TextEditingController toController=TextEditingController();
           // _datePickerTile(context, provider.toDate, () => provider.pickDate(context, false)),
         ],
       );
-    }
-
-    final list = provider.options[currentTab] ?? [];
-    final selected = provider.selectedOptions[currentTab]!;
-
-    return ListView.builder(
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        final item = list[index];
-        final isSelected = selected.contains(item);
-        return Column(
-          children: [
-            Row(
-              children: [
-                Checkbox(
-                  value: isSelected,
-               onChanged: (_) => provider.toggleOption(currentTab, item),
-
-                  activeColor: CattleColors.orange,
-                  checkColor: CattleColors.white,
-                  side: const BorderSide(color: CattleColors.hintGrey),
-                  visualDensity: const VisualDensity(horizontal: -4),
-                ),
-                Expanded(
-                  child: Text(item,
-                      style:
-                          const TextStyle(fontSize: 12, color: CattleColors.blacklight)),
-                ),
-                const Text('3', style: TextStyle(fontSize: 14, color: Colors.grey)),
-              ],
-            ),
-            const Divider(height: 1, thickness: 0.5, color: CattleColors.hintGrey),
-          ],
-        );
-      },
-    );
   }
+
+  final list = currentTab == "Village"
+      ? provider.getFilteredVillageOptions()
+      : provider.options[currentTab] ?? [];
+
+  final selected = provider.selectedOptions[currentTab]!;
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (currentTab == "Village")
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: TextField(
+  controller: provider.villageSearchController,
+  onChanged: provider.updateVillageSearch,
+  decoration: InputDecoration(
+    hintText: "Search",
+    labelStyle: TextStyle(color: CattleColors.hintGrey,),
+    hintStyle:  TextStyle(color: CattleColors.hintGrey,),
+    prefixIcon: Icon(Icons.search, color: CattleColors.hintGrey),
+    contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    filled: true,
+    fillColor: CattleColors.white,
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(color: CattleColors.hintGrey,width: 0.4), // 👈 default border
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(color: CattleColors.orange, width: 0.4), // 👈 on focus
+    ),
+  ),
+),
+
+        ),
+      Expanded(
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            final item = list[index];
+            final isSelected = selected.contains(item);
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isSelected,
+                      onChanged: (_) => provider.toggleOption(currentTab, item),
+                      activeColor: CattleColors.orange,
+                      checkColor: CattleColors.white,
+                      side: const BorderSide(color: CattleColors.hintGrey),
+                      visualDensity: const VisualDensity(horizontal: -4),
+                    ),
+                    Expanded(
+                      child: Text(item,
+                          style: const TextStyle(fontSize: 12, color: CattleColors.blacklight)),
+                    ),
+                    const Text('3', style: TextStyle(fontSize: 14, color: Colors.grey)),
+                  ],
+                ),
+                const Divider(height: 1, thickness: 0.5, color: CattleColors.hintGrey),
+              ],
+            );
+          },
+        ),
+      ),
+    ],
+  );
+}
+
+  // Widget _buildRightPanel(BuildContext context) {
+  //   final provider = context.watch<FilterProvider>();
+  //   final currentTab = provider.tabs[provider.selectedTabIndex];
+
+  //   if (currentTab == "Date") {
+  //     return Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         // const Text("From"),
+  //         // const SizedBox(height: 8),
+  //         // _datePickerTile(context, provider.fromDate, () 
+  //         // {
+  //         //      showCattleDatePicker(
+  //         //                 context: context, controller: from,
+  //         //                 );
+  //         // }
+  //         // // => provider.pickDate(context, true)
+          
+  //         // ),
+  //          CustomTextFieldWidget(
+  //                   isMandatory: false,
+  //                   title: CattleStrings.strFromDate,
+  //                   hintText: CattleStrings.strFromDateHint,
+  //                   onTapField: () {
+  //                     showCattleDatePicker(
+  //                         context: context,
+  //                         controller: fromController);
+  //                   },
+  //                   isFieldReadOnly: true,
+  //                   onChange: (val) {},
+  //                   textEditingController: fromController,
+  //                   autovalidateMode: AutovalidateMode.disabled,
+  //                   suffixIcon: Icon(Icons.calendar_today,
+  //                       size: 18, color: CattleColors.orange),
+  //                 ),
+  //                  CustomTextFieldWidget(
+  //                    isMandatory: false,
+  //                   title: CattleStrings.strToDate,
+  //                   hintText: CattleStrings.strToDateHint,
+  //                   onTapField: () {
+  //                     showCattleDatePicker(
+  //                         context: context,
+  //                         controller: toController);
+  //                   },
+  //                   isFieldReadOnly: true,
+  //                   onChange: (val) {},
+  //                   textEditingController: toController,
+  //                   autovalidateMode: AutovalidateMode.disabled,
+  //                   suffixIcon: Icon(Icons.calendar_today,
+  //                       size: 18, color: CattleColors.orange),
+  //                 ),
+  //         // const SizedBox(height: 16),
+  //         // const Text("To"),
+  //         // const SizedBox(height: 8),
+  //         // _datePickerTile(context, provider.toDate, () => provider.pickDate(context, false)),
+  //       ],
+  //     );
+  //   }
+
+  //   final list = provider.options[currentTab] ?? [];
+  //   final selected = provider.selectedOptions[currentTab]!;
+
+  //   return ListView.builder(
+  //     itemCount: list.length,
+  //     itemBuilder: (context, index) {
+  //       final item = list[index];
+  //       final isSelected = selected.contains(item);
+  //       return Column(
+  //         children: [
+  //           Row(
+  //             children: [
+  //               Checkbox(
+  //                 value: isSelected,
+  //              onChanged: (_) => provider.toggleOption(currentTab, item),
+
+  //                 activeColor: CattleColors.orange,
+  //                 checkColor: CattleColors.white,
+  //                 side: const BorderSide(color: CattleColors.hintGrey),
+  //                 visualDensity: const VisualDensity(horizontal: -4),
+  //               ),
+  //               Expanded(
+  //                 child: Text(item,
+  //                     style:
+  //                         const TextStyle(fontSize: 12, color: CattleColors.blacklight)),
+  //               ),
+  //               const Text('3', style: TextStyle(fontSize: 14, color: Colors.grey)),
+  //             ],
+  //           ),
+  //           const Divider(height: 1, thickness: 0.5, color: CattleColors.hintGrey),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   Widget _datePickerTile(BuildContext context, DateTime? date, VoidCallback onTap) {
     return InkWell(

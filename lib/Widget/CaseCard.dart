@@ -43,8 +43,9 @@ class CaseCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontSize: 14,
+                  fontWeight: FontWeight.w800,
                   color: CattleColors.hintGrey,
                 ),
               ),
@@ -53,10 +54,11 @@ class CaseCard extends StatelessWidget {
                 children: [
                   Text(
                     count,
-                    style: GoogleFonts.mulish(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
+                    style:GoogleFonts.mulish(
+  fontWeight: FontWeight.w800, // ExtraBold
+  color: CattleColors.blackshade,
+  fontSize: 32,
+)
                   ),
                   GestureDetector(
                     onTap:onclick,

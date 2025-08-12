@@ -36,5 +36,6 @@ class CattleColors {
     static const Color marron =Color(0xff8B001C);
     static const Color neutralF5 =Color(0xffF5F5F5);
     static const Color grey736 =Color(0xff736F6F);
+    static const Color darkred =Color(0xff670000);
    
 }

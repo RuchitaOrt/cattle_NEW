@@ -2,6 +2,7 @@ import 'package:cattle/Screens/FilterScreen.dart';
 import 'package:cattle/Screens/HomeScreen.dart';
 import 'package:cattle/Screens/LeadScreen.dart';
 import 'package:cattle/Screens/MenuScreen.dart';
+import 'package:cattle/Screens/NoFilterScreen.dart';
 import 'package:cattle/Screens/NotifcationScreen.dart';
 import 'package:cattle/Screens/ProfileScreen.dart';
 import 'package:cattle/Screens/ReviewClass.dart';
@@ -63,6 +64,10 @@ class Routers {
         case SearchScreen.route:
         return MaterialPageRoute(
           builder: (_) => SearchScreen(),
+        );
+          case NoFilterScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => NoFilterScreen(),
         );
       default:
         return MaterialPageRoute(builder: (_) => SplashScreen());

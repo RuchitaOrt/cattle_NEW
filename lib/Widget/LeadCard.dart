@@ -6,6 +6,7 @@ import 'package:cattle/Screens/PaymentScreen.dart';
 import 'package:cattle/Screens/ReviewClass.dart';
 import 'package:cattle/Screens/TaggingStepper.dart';
 import 'package:cattle/Widget/LogoutConfirmationSheet.dart';
+import 'package:cattle/Widget/callDialer.dart';
 import 'package:cattle/Widget/createSlideFromLeftRoute.dart';
 import 'package:cattle/enum/caseListingEnum.dart';
 import 'package:cattle/main.dart';
@@ -39,7 +40,8 @@ class LeadCard extends StatelessWidget {
             children: [
               leadList.status == CaseType.Complete.name
                   ? Container()
-                  : leadList.status == CaseType.New.name
+                  : 
+                  (leadList.status == CaseType.New.name || leadList.status == CaseType.Pending.name)
                       ? leadList.daysLeft != ""
                           ? Container(
                               width: SizeConfig.blockSizeHorizontal * 32,
@@ -287,6 +289,7 @@ class LeadCard extends StatelessWidget {
                                     width: 0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
+                              
                             ),
                             onPressed: () {},
                             child: Text(
@@ -395,13 +398,16 @@ class LeadCard extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ElevatedButton(
+                                
                                 style: ElevatedButton.styleFrom(
+                                  elevation: 0,
                                   backgroundColor: CattleColors.white,
                                   padding: EdgeInsets.symmetric(vertical: 8),
                                   shape: RoundedRectangleBorder(
+                                    
                                     side: BorderSide(
-                                        color: CattleColors.orange, width: 0.2),
-                                    borderRadius: BorderRadius.circular(0),
+                                        color: CattleColors.orange, width: 0.6),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
                                 onPressed: () {},
@@ -509,6 +515,7 @@ class _MoreOptionsMenuState extends State<MoreOptionsMenu> {
   final GlobalKey _iconKey = GlobalKey();
 
   void _showCustomMenu() {
+    print(widget.status);
     final RenderBox renderBox =
         _iconKey.currentContext!.findRenderObject() as RenderBox;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -537,7 +544,8 @@ class _MoreOptionsMenuState extends State<MoreOptionsMenu> {
                         widget.status == CaseType.Pending.name)
                     ? InkWell(
                         onTap: () {
-                          Navigator.pop(context); // Close menu
+                         dialPhoneNumber('1234567890');
+// Close menu
                           // Handle call action
                         },
                         child: Row(

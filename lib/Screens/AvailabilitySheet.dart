@@ -20,7 +20,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
   final BorderRadius borderRadius = const BorderRadius.all(Radius.circular(8));
   final BorderSide focusedBorder = const BorderSide(
     width: 1.0,
-     color: CattleColors.hintGrey,
+    color: CattleColors.hintGrey,
   );
   final BorderSide enableBorder = BorderSide(
     width: 1.0,
@@ -62,7 +62,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                     fontWeight: FontWeight.w200,
                     color: CattleColors.grey75)),
             const SizedBox(height: 16),
-    TextWithAsterisk(text:'Farmer available? '),
+            TextWithAsterisk(text: 'Farmer available? '),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
@@ -124,8 +124,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             if (provider.isFarmerAvailable == true) ...[
-            
-          TextWithAsterisk(text:'Animal available? '),
+              TextWithAsterisk(text: 'Animal available? '),
               Wrap(
                 spacing: 8,
                 children: [
@@ -192,21 +191,22 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 provider.isAnimalAvailable == false) ...[
               const SizedBox(height: 16),
 
+              CustomDropdownField(
+                labelText: CattleStrings.strReasonForUnavailabilty,
+                hintText: CattleStrings.strReasonForUnavailabiltyHint,
+                value: provider.selectedReason,
+                items: [
+                  'Cattle unhealthy',
+                  'Farmer Not Available',
+                ],
+                onChanged: (val) {
+                  provider.selectedReason = val;
+                },
+              ),
+              //  TextWithAsterisk(text:'Reason for unavailability '),
 
-                  CustomDropdownField(
-              labelText: CattleStrings.strReasonForUnavailabilty,
-              hintText: CattleStrings.strReasonForUnavailabiltyHint,
-              value: provider.selectedCategory,
-              items: ['Cattle unhealthy', 'Farmer Not Available', ],
-              onChanged: (val) {
-                provider.selectedCategory = val;
-              },
-            ),
-               TextWithAsterisk(text:'Reason for unavailability '),
-              
-              
-              const SizedBox(height: 4),
-           
+              // const SizedBox(height: 4),
+
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(12),
@@ -231,7 +231,61 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-            TextWithAsterisk(text:"Farmer's image "),
+
+              TextWithAsterisk(text: "Your current location "),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Latitude",
+                          style: TextStyle(
+                              color: CattleColors.hintGrey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w200),
+                        ),
+                        Text(
+                          "${provider.latitude}",
+                          style: TextStyle(
+                              color: CattleColors.blackshade,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w200),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Longitude",
+                          style: TextStyle(
+                              color: CattleColors.hintGrey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w200),
+                        ),
+                        Text(
+                          "${provider.longitude}",
+                          style: TextStyle(
+                              color: CattleColors.blackshade,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w200),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 16),
+              TextWithAsterisk(text: "Farmer's image "),
               const SizedBox(height: 4),
               GestureDetector(
                 onTap: provider.pickImageFarmer,
@@ -256,10 +310,9 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                         ),
                 ),
               ),
-              const SizedBox(height: 30),
-        TextWithAsterisk(text:"Nearby landmark's image "),
-            
-             
+              const SizedBox(height: 16),
+              TextWithAsterisk(text: "Nearby landmark's image "),
+
               const SizedBox(height: 4),
               GestureDetector(
                 onTap: provider.pickImage,
@@ -314,8 +367,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-                TextWithAsterisk(text: "Your current location "),
-             
+              TextWithAsterisk(text: "Your current location "),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,8 +419,7 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-         TextWithAsterisk(text:"Nearby landmark's image "),
-             
+              TextWithAsterisk(text: "Nearby landmark's image "),
               const SizedBox(height: 4),
               GestureDetector(
                 onTap: provider.pickImage,
@@ -408,18 +459,25 @@ class FarmerAvailabilitySheet extends StatelessWidget {
                           ? provider.imageFile != null
                               ? CattleColors.orange
                               : CattleColors.greyButton
-                          : CattleColors.greyButton,
+                          : provider.isAnimalAvailable == false
+                              ? (provider.imageFile != null &&
+                                      provider.imageFileFarmer != null && provider.selectedReason!=null)
+                                  ? CattleColors.orange
+                                  : CattleColors.greyButton
+                              : CattleColors.greyButton,
+                               disabledBackgroundColor: CattleColors.greyButton,
                 ),
+                
                 onPressed: () {
                   // handle success action
-print("first");
-print(provider.isFarmerAvailable);
-print("first");
+                  print("first");
+                  print(provider.isFarmerAvailable);
+                  print("first");
 
-                   if (provider.isFarmerAvailable == false) {
-                      print("first");
+                  if (provider.isFarmerAvailable == false) {
+                    print("first");
                     if (provider.imageFile != null) {
-                           Navigator.pop(context);
+                      Navigator.pop(context);
                       showModalBottomSheet(
                         backgroundColor: CattleColors.white,
                         context: context,
@@ -434,7 +492,7 @@ print("first");
                               CattleImagePath.unavailable, // Your SVG/PNG
                           isSingleButton: true,
                           title: "Farmer not available!",
-                         
+
                           onBackToHome: () {
                             Navigator.pushReplacement(
                                 routeGlobalKey.currentContext!,
@@ -448,20 +506,22 @@ print("first");
                           },
                           firstbutton: '',
                           secondButton: '',
-                          subHeading: 'You can view this case in the ‘New’ cases \nsection with the tag ‘Customer denied’',
+                          subHeading:
+                              'You can view this case in the ‘New’ cases \nsection with the tag ‘Customer denied’',
                         ),
                       );
                     }
-                   }
-                    else if(provider.isAnimalAvailable==false)
-                    {
-                      print("second");
-                      print(provider.isAnimalAvailable);
-                      print(provider.imageFile);
-                      print(provider.selectedReason);
-                      if (provider.imageFile != null&& provider.imageFileFarmer!=null && provider.selectedReason!=null) {
-                             Navigator.pop(context);
-                       showModalBottomSheet(
+                  } else if (provider.isAnimalAvailable == false) {
+                    print("second");
+                    print(provider.isAnimalAvailable);
+                    print(provider.imageFile);
+                     print(provider.imageFileFarmer);
+                    print(provider.selectedReason);
+                    if (provider.imageFile != null &&
+                        provider.imageFileFarmer != null &&
+                        provider.selectedReason != null) {
+                      Navigator.pop(context);
+                      showModalBottomSheet(
                         backgroundColor: CattleColors.white,
                         context: context,
                         shape: RoundedRectangleBorder(
@@ -475,7 +535,7 @@ print("first");
                               CattleImagePath.unavailable, // Your SVG/PNG
                           isSingleButton: true,
                           title: "Animal not available!",
-                         
+
                           onBackToHome: () {
                             Navigator.pushReplacement(
                                 routeGlobalKey.currentContext!,
@@ -489,23 +549,26 @@ print("first");
                           },
                           firstbutton: '',
                           secondButton: '',
-                          subHeading: 'You can view this case in the ‘New’ cases section with the tag ‘Customer denied’',
+                          subHeading:
+                              'You can view this case in the ‘New’ cases section with the tag ‘Customer denied’',
                         ),
                       );
-                      }
                     }
-                    else if (provider.isFormValid) {
-                        print("third");
+                  } else if (provider.isFormValid) {
+                    print("third");
                     Navigator.pushReplacement(
-                                routeGlobalKey.currentContext!,
-                                MaterialPageRoute(
-                                    builder: (context) => TaggingScreen(currentStepId: "1",type: "",proceed: "",)));
+                        routeGlobalKey.currentContext!,
+                        MaterialPageRoute(
+                            builder: (context) => TaggingScreen(
+                                  currentStepId: "1",
+                                  type: "",
+                                  proceed: "",
+                                )));
                   }
-                  
                 },
                 child: Text(
                   "Continue",
-                  style: TextStyle(color: CattleColors.white),
+                  style: TextStyle(color: CattleColors.white,fontWeight: FontWeight.bold,)
                 ),
               ),
             ),
@@ -534,6 +597,4 @@ print("first");
       ),
     );
   }
-
- 
 }

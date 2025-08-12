@@ -20,7 +20,7 @@ class _MediaScreenFormState extends State<MediaScreen> {
     return Scaffold(
      appBar: CommonAppBar(
         title: CattleStrings.strMediaUpload,
-        stepsTitle: "STEP 2/3",
+        stepsTitle: "STEP 2/ 3",
       ),
       backgroundColor: CattleColors.white,
       body: ChangeNotifierProvider(

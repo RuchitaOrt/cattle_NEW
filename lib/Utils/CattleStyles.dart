@@ -29,6 +29,11 @@ class CattleStyles {
     fontWeight: FontWeight.w600,
     fontSize: 16.0,
   );
+     static const TextStyle neutral90w40014 = TextStyle(
+    color: CattleColors.neutral90,
+    fontWeight: FontWeight.w400,
+    fontSize: 16.0,
+  );
   static const TextStyle blacklightw60014 = TextStyle(
     color: CattleColors.blacklight,
     fontWeight: FontWeight.w800,
@@ -58,6 +63,11 @@ class CattleStyles {
     static const TextStyle blacklightw50016 = TextStyle(
     color: CattleColors.blacklight,
     fontWeight: FontWeight.w500,
+    fontSize: 16.0,
+  );
+   static const TextStyle blackshadew50016 = TextStyle(
+    color: CattleColors.blackshade,
+    fontWeight: FontWeight.w700,
     fontSize: 16.0,
   );
 }

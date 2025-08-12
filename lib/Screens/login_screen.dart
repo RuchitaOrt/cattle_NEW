@@ -146,6 +146,7 @@ Widget build(BuildContext context) {
         style: ElevatedButton.styleFrom(
           backgroundColor:  signInProvider.isFormValid
               ? CattleColors.orange:CattleColors.greyButton,
+              disabledBackgroundColor: CattleColors.greyButton,
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -156,9 +157,9 @@ Widget build(BuildContext context) {
              Navigator.pushReplacement(routeGlobalKey.currentContext!,
                                MaterialPageRoute(builder: (context) => HomeScreen()));
         }:null,
-        child: const Text(
+        child:  Text(
           "Login",
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 16, color: Colors.white,fontWeight: FontWeight.bold),
         ),
       ),
     ),

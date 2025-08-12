@@ -213,10 +213,10 @@ class CattleStrings {
   static String strScheduleDate = "Scheduled date";
 
 
-  static String strFromDate = "From date";
-  static String strFromDateHint = "Select from date";
-    static String strToDate = "To date";
-      static String strToDateHint = "Select to date";
+  static String strFromDate = "From";
+  static String strFromDateHint = "Select date";
+    static String strToDate = "To";
+      static String strToDateHint = "Select date";
 
   static String strLead = "Lead";
 

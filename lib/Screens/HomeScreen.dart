@@ -1,4 +1,3 @@
-// home_screen.dart
 import 'package:cattle/Provider/app_provider.dart';
 import 'package:cattle/Screens/ListingScreen.dart';
 import 'package:cattle/Screens/MenuScreen.dart';
@@ -23,31 +22,58 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>with RouteAware {
+class _HomeScreenState extends State<HomeScreen>
+    with RouteAware, TickerProviderStateMixin {
+  late AnimationController _entryAnimationController;
+  late Animation<Offset> _entryOffsetAnimation;
   OverlayEntry? _toastEntry;
 
   @override
   void initState() {
     super.initState();
+WidgetsBinding.instance.addPostFrameCallback((_) {
+  _entryAnimationController.forward(); // Animate once
+});
+
+    // _entryAnimationController = AnimationController(
+    //   vsync: this,
+    //   duration: const Duration(milliseconds: 500),
+    // );
+_entryAnimationController = AnimationController(
+  vsync: this,
+  duration: const Duration(milliseconds: 1000),
+);
+
+    _entryOffsetAnimation = Tween<Offset>(
+        begin: const Offset(0.2, -0.2), 
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _entryAnimationController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _entryAnimationController.forward(); // Animate only on entry
+
+      final appProvider = Provider.of<AppProvider>(context, listen: false);
+      if (appProvider.selectedTab == 0) {
+        _showStickyToast(context);
+      }
+    });
 
     final appProvider = Provider.of<AppProvider>(context, listen: false);
     appProvider.addListener(() {
       if (appProvider.selectedTab == 0) {
-        _showStickyToast(context); // Show when Tagging is selected
-      } else {
-        _removeStickyToast(); // Remove when switching to Survey
-      }
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (appProvider.selectedTab == 0) {
         _showStickyToast(context);
+      } else {
+        _removeStickyToast();
       }
     });
   }
 
   void _showStickyToast(BuildContext context) {
-    // Prevent multiple toasts
     if (_toastEntry != null || !ModalRoute.of(context)!.isCurrent) return;
 
     _toastEntry = OverlayEntry(
@@ -59,14 +85,12 @@ class _HomeScreenState extends State<HomeScreen>with RouteAware {
           message: "15 cases expiring today",
           actionText: "Act now",
           onPressed: () {
-            print("Act now clicked");
-             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    ListingScreen(caseType: CaseType.Expiring),
-                              ),
-                            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ListingScreen(caseType: CaseType.Expiring),
+              ),
+            );
           },
         ),
       ),
@@ -79,66 +103,70 @@ class _HomeScreenState extends State<HomeScreen>with RouteAware {
     _toastEntry?.remove();
     _toastEntry = null;
   }
-@override
-void didPushNext() {
-  // Called when a new route is pushed on top of HomeScreen
-  _removeStickyToast();
-}
-@override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  routeObserver.subscribe(this, ModalRoute.of(context)!);
-}
 
-@override
-void dispose() {
-  routeObserver.unsubscribe(this);
-  _removeStickyToast(); // Already in your code
-  super.dispose();
-}
-@override
-void didPopNext() {
-  // Called when coming back to HomeScreen from another screen
-  final appProvider = Provider.of<AppProvider>(context, listen: false);
-  if (appProvider.selectedTab == 0) {
-    _showStickyToast(context); // Show again only for Tagging tab
+  @override
+  void didPushNext() {
+    _removeStickyToast();
   }
-}
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    _entryAnimationController.dispose();
+    _removeStickyToast();
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
+    if (appProvider.selectedTab == 0) {
+      _showStickyToast(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppProvider>(context);
 
     return Scaffold(
-      backgroundColor: CattleColors.white,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
+          // 🟢 Green Background
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              color: const Color(0xff53AE46),
+              image: DecorationImage(
+                image: AssetImage(CattleImagePath.material),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          // 🟩 Foreground content (header + animated white body)
           Column(
             children: [
-              // --- Green Header with profile, tabs, notification ---
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        CattleImagePath.material), // ✅ This is an ImageProvider
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                padding: EdgeInsets.only(top: 55, bottom: 16),
+              // 🟢 Static Green Header
+              Padding(
+                padding: const EdgeInsets.only(top: 55, bottom: 16),
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const SizedBox(width: 16),
                         GestureDetector(
-                          onTap: ()
-                          {
-                              // _removeStickyToast();
- Navigator.of(routeGlobalKey.currentContext!).push(
-  createSlideFromLeftRoute(const MenuScreen()),
-);
-
+                          onTap: () {
+                            Navigator.of(routeGlobalKey.currentContext!).push(
+                              createSlideFromLeftRoute(const MenuScreen()),
+                            );
                           },
                           child: Container(
                             width: 40,
@@ -155,20 +183,14 @@ void didPopNext() {
                             ),
                           ),
                         ),
-
                         const Spacer(),
-
-                        // Tabs
                         Container(
-                          padding: EdgeInsets.all(3),
+                          padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              border: Border.all(
-                                  style: BorderStyle.solid,
-                                  color: Colors.white,
-                                  width: 0.2)),
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.white, width: 0.4),
+                          ),
                           child: Row(
                             children: [
                               _TabButton(index: 0, label: "Tagging"),
@@ -177,52 +199,64 @@ void didPopNext() {
                             ],
                           ),
                         ),
-
                         const Spacer(),
                         IconButton(
                           icon: const Icon(Icons.notifications_none,
                               color: Colors.white),
                           onPressed: () {
-                            // _removeStickyToast();
-                            Navigator.of(routeGlobalKey.currentContext!)
-                                .pushNamed(
-                                  NotifcationScreen.route,
-                                )
-                                .then((value) {});
+                            
+                            // Navigator.of(routeGlobalKey.currentContext!)
+                            //     .pushNamed(NotifcationScreen.route);
+                                Navigator.of(routeGlobalKey.currentContext!).push(
+                            createSlideFromRightRoute(NotifcationScreen(),),
+                          );
                           },
                         ),
                         const SizedBox(width: 16),
                       ],
                     ),
                     GestureDetector(
-                      onTap: ()
-                      {
-                         Navigator.of(routeGlobalKey.currentContext!)
-                                .pushNamed(
-                                  SearchScreen.route,
-                                )
-                                .then((value) {});
+                      onTap: () {
+                           Navigator.of(routeGlobalKey.currentContext!).push(
+                            createSlideFrom70BottomRoute(SearchScreen(),0.0),
+                          );
+                       
                       },
                       child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 16, right: 16, top: 40),
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, top: 40),
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border: Border.all(color: Colors.white, width: 0.2),
-                            borderRadius: BorderRadius.circular(8),
+                            border:
+                                Border.all(color: Colors.white, width: 0.4),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 10),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Icon(Icons.search, color: Colors.white),
-                              SizedBox(width: 8),
-                              Text(
-                                "Search by farmer name",
-                                style: TextStyle(color: Colors.white),
+                            children: [
+                              const Icon(Icons.search, color: Colors.white),
+                              const SizedBox(width: 8),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Search by ",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    const TextSpan(
+                                      text: "farmer name",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -233,17 +267,86 @@ void didPopNext() {
                 ),
               ),
 
-              // --- White Search Bar ---
-
-              // --- Body Area changes based on tab ---
+              // ⚪️ White Animated Body (once on entry)
               Expanded(
-                child: provider.selectedTab == 0
-                    ? const TaggingHomeScreen()
-                    : const SurveyContent(),
+                child: 
+             SlideTransition(
+  position: Tween<Offset>(
+    begin: const Offset(0.0, -0.05), // Slightly above center
+    end: Offset.zero,
+  ).animate(
+    CurvedAnimation(
+      parent: _entryAnimationController,
+      curve: Curves.easeOutCubic,
+    ),
+  ),
+  child: FadeTransition(
+    opacity: _entryAnimationController,
+    child: Container(
+      margin: const EdgeInsets.only(top: 8),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28),
+          topRight: Radius.circular(28),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, -2),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(28),
+          topRight: Radius.circular(28),
+        ),
+        child: Consumer<AppProvider>(
+          builder: (_, provider, __) {
+            return provider.selectedTab == 0
+                ? const TaggingHomeScreen()
+                : const SurveyContent();
+          },
+        ),
+      ),
+    ),
+  ),
+),
+
+
+                // SlideTransition(
+                //   position: _entryOffsetAnimation,
+                //   child: Container(
+                //     margin: const EdgeInsets.only(top: 8),
+                //     decoration: const BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.only(
+                //         topLeft: Radius.circular(28),
+                //         topRight: Radius.circular(28),
+                //       ),
+                //       boxShadow: [
+                //         BoxShadow(
+                //           color: Colors.black12,
+                //           blurRadius: 6,
+                //           offset: Offset(0, -2),
+                //         ),
+                //       ],
+                //     ),
+                //     child: ClipRRect(
+                //       borderRadius: const BorderRadius.only(
+                //         topLeft: Radius.circular(28),
+                //         topRight: Radius.circular(28),
+                //       ),
+                //       child: provider.selectedTab == 0
+                //           ? const TaggingHomeScreen()
+                //           : const SurveyContent(),
+                //     ),
+                //   ),
+                // ),
               ),
-              SizedBox(
-                height: 60,
-              )
+              const SizedBox(height: 60),
             ],
           ),
         ],
@@ -252,7 +355,7 @@ void didPopNext() {
   }
 }
 
-// --- Tab Button Widget ---
+// 🔘 Reusable Tab Button
 class _TabButton extends StatelessWidget {
   final int index;
   final String label;
@@ -274,7 +377,7 @@ class _TabButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
           ),

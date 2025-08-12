@@ -109,6 +109,7 @@ class _SignatureScreenFormState extends State<SignatureScreen> {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                         disabledBackgroundColor: CattleColors.greyButton,
                         backgroundColor: basicFormProvider.isSignatureFormValid
                             ? CattleColors.orange
                             : CattleColors.greyButton,
@@ -155,9 +156,9 @@ class _SignatureScreenFormState extends State<SignatureScreen> {
                         }
                        
                       },
-                      child: const Text(
+                      child:  Text(
                         "Continue",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

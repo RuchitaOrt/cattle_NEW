@@ -196,6 +196,7 @@ class CreateLeadCaseSheet extends StatelessWidget {
                     backgroundColor: provider.isFormValid 
                         ? CattleColors.orange
                         : CattleColors.greyButton,
+                         disabledBackgroundColor: CattleColors.greyButton,
                   ),
                   onPressed: () {
                    if(provider.isFormValid ){
@@ -208,7 +209,7 @@ class CreateLeadCaseSheet extends StatelessWidget {
                   },
                   child: Text(
                     "Create",
-                    style: TextStyle(color: CattleColors.white),
+                    style: TextStyle(color: CattleColors.white,fontWeight: FontWeight.bold),
                   ),
                                 ),
                               ),

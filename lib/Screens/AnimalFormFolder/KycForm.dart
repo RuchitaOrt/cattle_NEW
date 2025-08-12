@@ -70,7 +70,7 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
     return Scaffold(
         appBar: CommonAppBar(
           title: CattleStrings.strKYC,
-          stepsTitle: "STEP 4/5",
+          stepsTitle: "STEP 4/ 5",
         ),
         backgroundColor: CattleColors.white,
         bottomNavigationBar: Container(
@@ -130,6 +130,7 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
                     backgroundColor:basicFormProvider.isPoliticallyExposed==true?CattleColors.orange:
                     basicFormProvider.checkCYKYCFormValid?CattleColors.orange:
                      CattleColors.greyButton ,
+                      disabledBackgroundColor: CattleColors.greyButton,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                   ),
@@ -347,7 +348,7 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
                   },
                   child: Text(
                       basicFormProvider.isCKYC==null ?  "Continue":basicFormProvider.isCKYC!?"Check CKYC":"Continue" ,
-                      style: TextStyle(color: Colors.white)),
+                      style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
